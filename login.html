@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>تسجيل الدخول — NOVA</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="auth-page">
+
+        <div class="auth-container">
+
+            <a href="index.html" class="nova-logo auth-logo">
+                <span class="logo-icon">N</span>
+                <span class="logo-text">NOVA</span>
+            </a>
+
+
+            <div class="auth-card">
+
+                <div class="auth-header">
+
+                    <div class="auth-icon">
+                        🔐
+                    </div>
+
+                    <h1>
+                        مرحباً بك في NOVA
+                    </h1>
+
+                    <p>
+                        سجّل الدخول أو أنشئ حساباً جديداً
+                    </p>
+
+                </div>
+
+
+                <!-- التبديل -->
+
+                <div class="auth-tabs">
+
+                    <button
+                        type="button"
+                        id="loginTab"
+                        class="auth-tab active"
+                    >
+                        تسجيل الدخول
+                    </button>
+
+                    <button
+                        type="button"
+                        id="registerTab"
+                        class="auth-tab"
+                    >
+                        إنشاء حساب
+                    </button>
+
+                </div>
+
+
+                <!-- LOGIN -->
+
+                <form
+                    id="loginForm"
+                    class="auth-form"
+                >
+
+                    <div class="form-group">
+
+                        <label for="loginEmail">
+                            البريد الإلكتروني
+                        </label>
+
+                        <input
+                            id="loginEmail"
+                            type="email"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="loginPassword">
+                            كلمة المرور
+                        </label>
+
+                        <input
+                            id="loginPassword"
+                            type="password"
+                            placeholder="أدخل كلمة المرور"
+                            autocomplete="current-password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="loginButton"
+                    >
+                        تسجيل الدخول
+                    </button>
+
+                </form>
+
+
+                <!-- REGISTER -->
+
+                <form
+                    id="registerForm"
+                    class="auth-form hidden"
+                >
+
+                    <div class="form-group">
+
+                        <label for="registerName">
+                            الاسم
+                        </label>
+
+                        <input
+                            id="registerName"
+                            type="text"
+                            placeholder="اكتب اسمك"
+                            autocomplete="name"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="registerEmail">
+                            البريد الإلكتروني
+                        </label>
+
+                        <input
+                            id="registerEmail"
+                            type="email"
+                            placeholder="example@email.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="registerPassword">
+                            كلمة المرور
+                        </label>
+
+                        <input
+                            id="registerPassword"
+                            type="password"
+                            placeholder="6 أحرف على الأقل"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="registerPasswordConfirm">
+                            تأكيد كلمة المرور
+                        </label>
+
+                        <input
+                            id="registerPasswordConfirm"
+                            type="password"
+                            placeholder="أعد كتابة كلمة المرور"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="auth-submit"
+                        id="registerButton"
+                    >
+                        إنشاء الحساب
+                    </button>
+
+                </form>
+
+
+                <!-- الرسائل -->
+
+                <div
+                    id="authMessage"
+                    class="auth-message"
+                    role="alert"
+                ></div>
+
+
+                <div class="auth-back">
+
+                    <a href="index.html">
+                        ← العودة إلى NOVA
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- الملفات الأساسية -->
+
+    <script src="config.js"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="auth.js"></script>
+
+
+    <!-- منطق صفحة الدخول -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const loginTab =
+                    document.getElementById("loginTab");
+
+                const registerTab =
+                    document.getElementById("registerTab");
+
+                const loginForm =
+                    document.getElementById("loginForm");
+
+                const registerForm =
+                    document.getElementById("registerForm");
+
+                const loginButton =
+                    document.getElementById("loginButton");
+
+                const registerButton =
+                    document.getElementById("registerButton");
+
+                const message =
+                    document.getElementById("authMessage");
+
+
+                function showMessage(
+                    text,
+                    type = "error"
+                ) {
+
+                    if (!message) {
+                        return;
+                    }
+
+                    message.textContent = text;
+
+                    message.className =
+                        "auth-message " + type;
+
+                }
+
+
+                function clearMessage() {
+
+                    if (!message) {
+                        return;
+                    }
+
+                    message.textContent = "";
+
+                    message.className =
+                        "auth-message";
+
+                }
+
+
+                function showLogin() {
+
+                    loginTab.classList.add("active");
+
+                    registerTab.classList.remove("active");
+
+                    loginForm.classList.remove("hidden");
+
+                    registerForm.classList.add("hidden");
+
+                    clearMessage();
+
+                }
+
+
+                function showRegister() {
+
+                    registerTab.classList.add("active");
+
+                    loginTab.classList.remove("active");
+
+                    registerForm.classList.remove("hidden");
+
+                    loginForm.classList.add("hidden");
+
+                    clearMessage();
+
+                }
+
+
+                loginTab.addEventListener(
+                    "click",
+                    showLogin
+                );
+
+
+                registerTab.addEventListener(
+                    "click",
+                    showRegister
+                );
+
+
+                /* تسجيل الدخول */
+
+                loginForm.addEventListener(
+                    "submit",
+                    async function (event) {
+
+                        event.preventDefault();
+
+                        clearMessage();
+
+                        const email =
+                            document
+                            .getElementById("loginEmail")
+                            .value
+                            .trim();
+
+                        const password =
+                            document
+                            .getElementById("loginPassword")
+                            .value;
+
+
+                        if (!email || !password) {
+
+                            showMessage(
+                                "يرجى إدخال البريد الإلكتروني وكلمة المرور."
+                            );
+
+                            return;
+
+                        }
+
+
+                        loginButton.disabled = true;
+
+                        loginButton.textContent =
+                            "جاري تسجيل الدخول...";
+
+
+                        try {
+
+                            const result =
+                                await window.NOVA_AUTH.login(
+                                    email,
+                                    password
+                                );
+
+
+                            if (result.error) {
+
+                                showMessage(
+                                    result.error.message ||
+                                    "حدث خطأ أثناء تسجيل الدخول."
+                                );
+
+                                return;
+
+                            }
+
+
+                            showMessage(
+                                "تم تسجيل الدخول بنجاح! 🚀",
+                                "success"
+                            );
+
+
+                            setTimeout(
+                                function () {
+
+                                    window.location.href =
+                                        "projects.html";
+
+                                },
+                                800
+                            );
+
+
+                        } catch (error) {
+
+                            console.error(error);
+
+                            showMessage(
+                                "حدث خطأ غير متوقع. حاول مرة أخرى."
+                            );
+
+                        } finally {
+
+                            loginButton.disabled = false;
+
+                            loginButton.textContent =
+                                "تسجيل الدخول";
+
+                        }
+
+                    }
+                );
+
+
+                /* إنشاء حساب */
+
+                registerForm.addEventListener(
+                    "submit",
+                    async function (event) {
+
+                        event.preventDefault();
+
+                        clearMessage();
+
+                        const name =
+                            document
+                            .getElementById("registerName")
+                            .value
+                            .trim();
+
+                        const email =
+                            document
+                            .getElementById("registerEmail")
+                            .value
+                            .trim();
+
+                        const password =
+                            document
+                            .getElementById("registerPassword")
+                            .value;
+
+                        const confirmPassword =
+                            document
+                            .getElementById("registerPasswordConfirm")
+                            .value;
+
+
+                        if (!name) {
+
+                            showMessage(
+                                "اكتب اسمك أولاً."
+                            );
+
+                            return;
+
+                        }
+
+
+                        if (!email) {
+
+                            showMessage(
+                                "اكتب البريد الإلكتروني."
+                            );
+
+                            return;
+
+                        }
+
+
+                        if (password.length < 6) {
+
+                            showMessage(
+                                "كلمة المرور يجب أن تكون 6 أحرف على الأقل."
+                            );
+
+                            return;
+
+                        }
+
+
+                        if (
+                            password !==
+                            confirmPassword
+                        ) {
+
+                            showMessage(
+                                "كلمتا المرور غير متطابقتين."
+                            );
+
+                            return;
+
+                        }
+
+
+                        registerButton.disabled = true;
+
+                        registerButton.textContent =
+                            "جاري إنشاء الحساب...";
+
+
+                        try {
+
+                            const result =
+                                await window.NOVA_AUTH.register(
+                                    email,
+                                    password,
+                                    name
+                                );
+
+
+                            if (result.error) {
+
+                                showMessage(
+                                    result.error.message ||
+                                    "تعذر إنشاء الحساب."
+                                );
+
+                                return;
+
+                            }
+
+
+                            if (
+                                result.data &&
+                                result.data.session
+                            ) {
+
+                                showMessage(
+                                    "تم إنشاء الحساب بنجاح! 🚀",
+                                    "success"
+                                );
+
+
+                                setTimeout(
+                                    function () {
+
+                                        window.location.href =
+                                            "projects.html";
+
+                                    },
+                                    800
+                                );
+
+                            } else {
+
+                                showMessage(
+                                    "تم إنشاء الحساب. تحقق من بريدك الإلكتروني لتأكيد الحساب.",
+                                    "success"
+                                );
+
+                            }
+
+
+                        } catch (error) {
+
+                            console.error(error);
+
+                            showMessage(
+                                "حدث خطأ غير متوقع. حاول مرة أخرى."
+                            );
+
+                        } finally {
+
+                            registerButton.disabled = false;
+
+                            registerButton.textContent =
+                                "إنشاء الحساب";
+
+                        }
+
+                    }
+                );
+
+
+                /* التأكد من وجود جلسة */
+
+                document.addEventListener(
+                    "nova:supabase-ready",
+                    async function () {
+
+                        try {
+
+                            if (
+                                window.NOVA_AUTH &&
+                                typeof window.NOVA_AUTH.getUser ===
+                                "function"
+                            ) {
+
+                                const user =
+                                    await window.NOVA_AUTH.getUser();
+
+                                if (user) {
+
+                                    window.location.href =
+                                        "projects.html";
+
+                                }
+
+                            }
+
+                        } catch (error) {
+
+                            console.error(
+                                "Auth check error:",
+                                error
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>

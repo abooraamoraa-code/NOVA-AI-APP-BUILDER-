@@ -1,114 +1,55 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>NOVA — منصة بناء التطبيقات بالذكاء الاصطناعي</title>
 
     <meta
         name="description"
-        content="NOVA - منصة ذكية لبناء التطبيقات والمشاريع باستخدام الذكاء الاصطناعي"
+        content="NOVA منصة ذكية لإنشاء التطبيقات والمشاريع باستخدام الذكاء الاصطناعي."
     >
 
-    <meta
-        name="theme-color"
-        content="#4285f4"
-    >
+    <meta name="theme-color" content="#080b16">
 
-    <title>NOVA — AI App Builder</title>
-
-    <!-- =====================================================
-         NOVA MAIN CSS
-         ===================================================== -->
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =====================================================
+    <!-- =========================
          HEADER
-         ===================================================== -->
+    ========================== -->
 
     <header class="nova-header">
 
-        <div class="container nova-header-inner">
+        <div class="header-container">
 
-            <a
-                href="#home"
-                class="nova-logo"
-            >
-
-                <span class="nova-logo-icon">
-                    N
-                </span>
-
-                <span>
-                    NOVA
-                </span>
-
+            <a href="index.html" class="nova-logo">
+                <span class="logo-icon">N</span>
+                <span class="logo-text">NOVA</span>
             </a>
 
+            <nav class="nova-nav" id="novaNav">
 
-            <nav class="nova-nav">
+                <a href="#home">الرئيسية</a>
 
-                <a href="#home">
-                    الرئيسية
-                </a>
+                <a href="#features">المميزات</a>
 
-                <a href="#technologies">
-                    التقنيات
-                </a>
+                <a href="#how">كيف تعمل؟</a>
 
-                <a href="#features">
-                    المميزات
-                </a>
+                <a href="#support">الدعم</a>
 
-                <a href="#how">
-                    كيف تعمل؟
-                </a>
-
-                <a href="#support">
-                    ادعمنا
+                <a href="login.html" id="loginNavLink">
+                    تسجيل الدخول
                 </a>
 
             </nav>
 
-
-            <div class="header-actions">
-
-                <button
-                    class="nova-btn nova-btn-secondary"
-                    type="button"
-                    onclick="novaOpenModal(
-                        'تسجيل الدخول',
-                        '<p>سيتم تفعيل نظام تسجيل الدخول الحقيقي في الخطوات القادمة باستخدام Supabase Auth.</p>'
-                    )"
-                >
-                    تسجيل الدخول
-                </button>
-
-                <button
-                    class="nova-btn nova-btn-primary"
-                    type="button"
-                    onclick="novaScroll('#builder')"
-                >
-                    ابدأ الآن
-                </button>
-
-            </div>
-
-
             <button
-                id="mobileMenuButton"
                 class="mobile-menu-button"
+                id="mobileMenuButton"
                 type="button"
                 aria-label="فتح القائمة"
             >
@@ -117,149 +58,130 @@
 
         </div>
 
-
-        <div
-            id="mobileMenu"
-            class="mobile-menu"
-        >
-
-            <a href="#home">
-                الرئيسية
-            </a>
-
-            <a href="#technologies">
-                التقنيات
-            </a>
-
-            <a href="#features">
-                المميزات
-            </a>
-
-            <a href="#how">
-                كيف تعمل؟
-            </a>
-
-            <a href="#support">
-                ادعمنا
-            </a>
-
-        </div>
-
     </header>
 
 
-    <!-- =====================================================
-         HERO
-         ===================================================== -->
+    <!-- =========================
+         MAIN
+    ========================== -->
 
     <main>
 
-        <section
-            id="home"
-            class="hero"
-        >
+        <!-- =========================
+             HERO
+        ========================== -->
 
-            <div class="container">
+        <section class="hero-section" id="home">
 
-                <div class="hero-content">
+            <div class="hero-container">
 
-                    <div class="hero-badge">
-
-                        ✨
-                        منصة بناء التطبيقات بالذكاء الاصطناعي
-
-                    </div>
-
-
-                    <h1>
-
-                        اكتب فكرتك...
-
-                        <br>
-
-                        <span class="gradient-text">
-                            وNOVA تبنيها معك
-                        </span>
-
-                    </h1>
-
-
-                    <p class="hero-description">
-
-                        NOVA هي منصة تهدف إلى تحويل وصفك المكتوب
-                        إلى مشروع تطبيق حقيقي، مع ملفات وكود
-                        وقاعدة بيانات وذكاء اصطناعي وأدوات تطوير.
-
-                    </p>
-
-
-                    <div class="hero-actions">
-
-                        <button
-                            class="nova-btn nova-btn-primary nova-btn-large"
-                            type="button"
-                            onclick="novaScroll('#builder')"
-                        >
-                            🚀 ابدأ بناء تطبيقك
-                        </button>
-
-
-                        <button
-                            class="nova-btn nova-btn-secondary nova-btn-large"
-                            type="button"
-                            onclick="novaScroll('#how')"
-                        >
-                            ▶ كيف تعمل NOVA؟
-                        </button>
-
-                    </div>
-
+                <div class="hero-badge">
+                    🚀 مستقبل بناء التطبيقات يبدأ هنا
                 </div>
 
+                <h1 class="hero-title">
+                    ابنِ تطبيقك
+                    <span>بالذكاء الاصطناعي</span>
+                </h1>
 
-                <!-- =================================================
-                     BUILDER
-                     ================================================= -->
-
-                <div
-                    id="builder"
-                    class="prompt-wrapper"
-                >
-
-                    <div class="prompt-card">
-
-                        <textarea
-                            id="novaPrompt"
-                            maxlength="20000"
-                            placeholder="اكتب فكرتك هنا... مثال: أريد تطبيق متجر ملابس يحتوي على تسجيل دخول، منتجات، سلة شراء، طلبات، لوحة تحكم، وقاعدة بيانات."
-                            aria-label="وصف التطبيق"
-                        ></textarea>
+                <p class="hero-description">
+                    اكتب فكرتك فقط، ودع NOVA تساعدك في تحويلها
+                    إلى مشروع تطبيق حقيقي ومنظم.
+                </p>
 
 
-                        <div class="prompt-bottom">
+                <!-- AI PROMPT BOX -->
 
-                            <span class="prompt-hint">
+                <div class="ai-builder-box">
 
-                                💡 كلما كان وصفك أوضح،
-                                أصبح بناء المشروع أكثر دقة.
+                    <div class="ai-box-header">
 
+                        <div class="ai-status">
+
+                            <span class="status-dot"></span>
+
+                            <span>
+                                NOVA AI جاهز
                             </span>
 
+                        </div>
 
-                            <button
-                                id="generateButton"
-                                class="nova-btn nova-btn-primary nova-btn-large"
-                                type="button"
-                            >
+                        <span class="ai-version">
+                            AI Builder
+                        </span>
 
-                                🚀
+                    </div>
+
+
+                    <textarea
+                        id="novaPrompt"
+                        class="nova-prompt"
+                        placeholder="اكتب فكرتك هنا...
+
+مثال:
+اعمل لي تطبيق متجر ملابس يحتوي على تسجيل دخول، منتجات، سلة شراء، صفحة دفع وحساب المستخدم."
+                        maxlength="20000"
+                    ></textarea>
+
+
+                    <div class="prompt-footer">
+
+                        <span id="promptCounter">
+                            0 / 20000
+                        </span>
+
+                        <button
+                            id="generateButton"
+                            class="generate-button"
+                            type="button"
+                        >
+
+                            <span class="generate-icon">
+                                ✨
+                            </span>
+
+                            <span>
                                 ابدأ بناء التطبيق
+                            </span>
 
-                            </button>
-
-                        </div>
+                        </button>
 
                     </div>
+
+                </div>
+
+
+                <!-- QUICK IDEAS -->
+
+                <div class="quick-ideas">
+
+                    <span>
+                        أفكار سريعة:
+                    </span>
+
+                    <button
+                        type="button"
+                        class="idea-button"
+                        data-prompt="اعمل لي تطبيق متجر إلكتروني لبيع الملابس مع المنتجات والسلة وتسجيل الدخول."
+                    >
+                        متجر إلكتروني
+                    </button>
+
+                    <button
+                        type="button"
+                        class="idea-button"
+                        data-prompt="اعمل لي تطبيق لإدارة المهام اليومية مع إضافة المهام وحذفها وتعديلها."
+                    >
+                        إدارة المهام
+                    </button>
+
+                    <button
+                        type="button"
+                        class="idea-button"
+                        data-prompt="اعمل لي موقع شركة احترافي يحتوي على الرئيسية والخدمات والأسعار والتواصل."
+                    >
+                        موقع شركة
+                    </button>
 
                 </div>
 
@@ -268,94 +190,27 @@
         </section>
 
 
-        <!-- =====================================================
-             STATS
-             ===================================================== -->
-
-        <section class="stats">
-
-            <div class="container">
-
-                <div class="stats-grid">
-
-                    <div class="stat">
-
-                        <div class="stat-number">
-                            AI
-                        </div>
-
-                        <div class="stat-label">
-                            محرك ذكاء اصطناعي
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat">
-
-                        <div class="stat-number">
-                            100+
-                        </div>
-
-                        <div class="stat-label">
-                            ميزة قابلة للتطوير
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat">
-
-                        <div class="stat-number">
-                            Cloud
-                        </div>
-
-                        <div class="stat-label">
-                            بنية سحابية
-                        </div>
-
-                    </div>
-
-
-                    <div class="stat">
-
-                        <div class="stat-number">
-                            24/7
-                        </div>
-
-                        <div class="stat-label">
-                            جاهزية المنصة
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
+        <!-- =========================
              TECHNOLOGIES
-             ===================================================== -->
+        ========================== -->
 
-        <section
-            id="technologies"
-            class="section"
-        >
+        <section class="technologies-section">
 
-            <div class="container">
+            <div class="section-container">
 
-                <div class="section-header">
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        TECHNOLOGY
+                    </span>
 
                     <h2>
-                        مبنية على تقنيات قوية
+                        مبني على تقنيات قوية
                     </h2>
 
                     <p>
-                        سنربط NOVA تدريجيًا بخدمات حقيقية
-                        لبناء منصة قابلة للتوسع.
+                        NOVA مصممة لتعمل مع مجموعة من التقنيات
+                        والخدمات الحديثة.
                     </p>
 
                 </div>
@@ -363,9 +218,9 @@
 
                 <div class="technology-grid">
 
-                    <div class="tech-card">
+                    <div class="technology-card">
 
-                        <div class="tech-icon">
+                        <div class="technology-icon">
                             G
                         </div>
 
@@ -374,15 +229,15 @@
                         </h3>
 
                         <p>
-                            تقنيات وذكاء اصطناعي
+                            ذكاء اصطناعي وتقنيات Google.
                         </p>
 
                     </div>
 
 
-                    <div class="tech-card">
+                    <div class="technology-card">
 
-                        <div class="tech-icon">
+                        <div class="technology-icon">
                             F
                         </div>
 
@@ -391,15 +246,15 @@
                         </h3>
 
                         <p>
-                            خدمات التطبيقات
+                            خدمات وتطبيقات الويب الحديثة.
                         </p>
 
                     </div>
 
 
-                    <div class="tech-card">
+                    <div class="technology-card">
 
-                        <div class="tech-icon">
+                        <div class="technology-icon">
                             M
                         </div>
 
@@ -408,16 +263,16 @@
                         </h3>
 
                         <p>
-                            تقنيات سحابية وأدوات
+                            تقنيات وخدمات Microsoft.
                         </p>
 
                     </div>
 
 
-                    <div class="tech-card">
+                    <div class="technology-card">
 
-                        <div class="tech-icon">
-                            Git
+                        <div class="technology-icon">
+                            GH
                         </div>
 
                         <h3>
@@ -425,15 +280,15 @@
                         </h3>
 
                         <p>
-                            إدارة الكود والمشاريع
+                            إدارة المشاريع والملفات والكود.
                         </p>
 
                     </div>
 
 
-                    <div class="tech-card">
+                    <div class="technology-card">
 
-                        <div class="tech-icon">
+                        <div class="technology-icon">
                             S
                         </div>
 
@@ -442,7 +297,7 @@
                         </h3>
 
                         <p>
-                            قاعدة البيانات والمصادقة
+                            قاعدة البيانات والمصادقة والتخزين.
                         </p>
 
                     </div>
@@ -454,33 +309,35 @@
         </section>
 
 
-        <!-- =====================================================
+        <!-- =========================
              FEATURES
-             ===================================================== -->
+        ========================== -->
 
         <section
+            class="features-section"
             id="features"
-            class="section features"
         >
 
-            <div class="container">
+            <div class="section-container">
 
-                <div class="section-header">
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        FEATURES
+                    </span>
 
                     <h2>
                         كل ما تحتاجه لبناء مشروعك
                     </h2>
 
                     <p>
-                        NOVA مصممة لتكبر من واجهة بسيطة
-                        إلى منصة تطوير متكاملة.
+                        مجموعة كبيرة من الأدوات في منصة واحدة.
                     </p>
 
                 </div>
 
 
                 <div class="features-grid">
-
 
                     <div class="feature-card">
 
@@ -489,48 +346,12 @@
                         </div>
 
                         <h3>
-                            الذكاء الاصطناعي
+                            AI Builder
                         </h3>
 
                         <p>
-                            تحليل فكرة المشروع وتحويلها
-                            إلى خطة تنفيذ وكود وملفات.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-                            🧩
-                        </div>
-
-                        <h3>
-                            بناء المشاريع
-                        </h3>
-
-                        <p>
-                            إنشاء هيكل المشروع وملفاته
-                            وإدارتها من مكان واحد.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-                            🗄️
-                        </div>
-
-                        <h3>
-                            قاعدة البيانات
-                        </h3>
-
-                        <p>
-                            حفظ المستخدمين والمشاريع
-                            والملفات والطلبات بشكل منظم.
+                            اكتب فكرتك باللغة الطبيعية
+                            وابدأ إنشاء مشروعك.
                         </p>
 
                     </div>
@@ -547,8 +368,41 @@
                         </h3>
 
                         <p>
-                            نظام حسابات ومصادقة حقيقي
-                            باستخدام خدمات آمنة.
+                            نظام حسابات آمن للمستخدمين.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            📁
+                        </div>
+
+                        <h3>
+                            المشاريع
+                        </h3>
+
+                        <p>
+                            أنشئ واحفظ وأدر مشاريعك.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            💾
+                        </div>
+
+                        <h3>
+                            ملفات المشروع
+                        </h3>
+
+                        <p>
+                            تنظيم ملفات المشروع وإدارتها.
                         </p>
 
                     </div>
@@ -565,8 +419,7 @@
                         </h3>
 
                         <p>
-                            معاينة المشاريع والتطبيقات
-                            قبل نشرها.
+                            شاهد مشروعك أثناء العمل.
                         </p>
 
                     </div>
@@ -583,8 +436,7 @@
                         </h3>
 
                         <p>
-                            حفظ الملفات والصور والأصول
-                            الخاصة بالمشاريع.
+                            تخزين ملفات وموارد المشروع.
                         </p>
 
                     </div>
@@ -593,16 +445,15 @@
                     <div class="feature-card">
 
                         <div class="feature-icon">
-                            📁
+                            🛠️
                         </div>
 
                         <h3>
-                            إدارة الملفات
+                            لوحة الإدارة
                         </h3>
 
                         <p>
-                            تنظيم ملفات المشروع وإمكانية
-                            تعديلها وتحديثها.
+                            أدوات لإدارة المنصة والمستخدمين.
                         </p>
 
                     </div>
@@ -611,34 +462,16 @@
                     <div class="feature-card">
 
                         <div class="feature-icon">
-                            💬
+                            🐙
                         </div>
 
                         <h3>
-                            الدعم
+                            GitHub
                         </h3>
 
                         <p>
-                            نظام رسائل وشكاوى وطلبات
-                            للتواصل مع إدارة المنصة.
-                        </p>
-
-                    </div>
-
-
-                    <div class="feature-card">
-
-                        <div class="feature-icon">
-                            🛡️
-                        </div>
-
-                        <h3>
-                            الإدارة والأمان
-                        </h3>
-
-                        <p>
-                            لوحة إدارة منفصلة وإعدادات
-                            وصلاحيات وسجلات للنظام.
+                            إمكانية تصدير المشاريع وربطها
+                            مع GitHub.
                         </p>
 
                     </div>
@@ -650,42 +483,36 @@
         </section>
 
 
-        <!-- =====================================================
+        <!-- =========================
              HOW IT WORKS
-             ===================================================== -->
+        ========================== -->
 
         <section
+            class="how-section"
             id="how"
-            class="section"
         >
 
-            <div class="container">
+            <div class="section-container">
 
-                <div class="section-header">
+                <div class="section-heading">
+
+                    <span class="section-label">
+                        HOW IT WORKS
+                    </span>
 
                     <h2>
                         كيف تعمل NOVA؟
                     </h2>
-
-                    <p>
-                        العملية تبدأ من فكرتك ثم تتحول
-                        تدريجيًا إلى مشروع قابل للتطوير.
-                    </p>
 
                 </div>
 
 
                 <div class="steps-grid">
 
-
                     <div class="step-card">
 
-                        <span class="step-number">
-                            1
-                        </span>
-
-                        <div class="step-icon">
-                            ✍️
+                        <div class="step-number">
+                            01
                         </div>
 
                         <h3>
@@ -693,9 +520,7 @@
                         </h3>
 
                         <p>
-                            اشرح للتطبيق ماذا تريد أن يبني،
-                            مثل متجر أو منصة أو لوحة تحكم
-                            أو نظام خدمات.
+                            أخبر NOVA بالتطبيق الذي تريد بناءه.
                         </p>
 
                     </div>
@@ -703,12 +528,8 @@
 
                     <div class="step-card">
 
-                        <span class="step-number">
-                            2
-                        </span>
-
-                        <div class="step-icon">
-                            🧠
+                        <div class="step-number">
+                            02
                         </div>
 
                         <h3>
@@ -716,9 +537,7 @@
                         </h3>
 
                         <p>
-                            محرك NOVA سيحلل المتطلبات
-                            ويقسم المشروع إلى أجزاء
-                            ومكونات وملفات.
+                            يتم تحليل طلبك وتجهيزه لبناء المشروع.
                         </p>
 
                     </div>
@@ -726,22 +545,33 @@
 
                     <div class="step-card">
 
-                        <span class="step-number">
-                            3
-                        </span>
-
-                        <div class="step-icon">
-                            🚀
+                        <div class="step-number">
+                            03
                         </div>
 
                         <h3>
-                            بناء المشروع
+                            إنشاء المشروع
                         </h3>
 
                         <p>
-                            يتم إنشاء الملفات والكود
-                            وقاعدة البيانات والوظائف
-                            المطلوبة حسب التصميم.
+                            يتم إنشاء هيكل المشروع وملفاته.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-card">
+
+                        <div class="step-number">
+                            04
+                        </div>
+
+                        <h3>
+                            معاينة وتطوير
+                        </h3>
+
+                        <p>
+                            شاهد المشروع وعدّل عليه وطوره.
                         </p>
 
                     </div>
@@ -753,41 +583,47 @@
         </section>
 
 
-        <!-- =====================================================
+        <!-- =========================
              SUPPORT
-             ===================================================== -->
+        ========================== -->
 
         <section
+            class="support-section"
             id="support"
-            class="section support"
         >
 
-            <div class="container">
+            <div class="section-container">
 
-                <div class="support-box">
+                <div class="support-card">
 
-                    <h2>
-                        ❤️ ادعم مشروع NOVA
-                    </h2>
+                    <div class="support-content">
 
-                    <p>
-                        سنضيف لاحقًا صفحة دعم كاملة يمكن
-                        لإدارة NOVA التحكم بها، بما في ذلك
-                        معلومات المحفظة ورمز QR والصورة
-                        ورسالة الدعم.
-                    </p>
+                        <span class="section-label">
+                            SUPPORT
+                        </span>
 
+                        <h2>
+                            تحتاج إلى مساعدة؟
+                        </h2>
 
-                    <button
-                        class="nova-btn nova-btn-primary nova-btn-large"
-                        type="button"
-                        onclick="novaOpenModal(
-                            'دعم NOVA',
-                            '<p>صفحة الدعم الحقيقية سيتم ربطها بقاعدة البيانات ولوحة الإدارة.</p><p style=&quot;margin-top:10px&quot;>من لوحة الإدارة يمكن تغيير بيانات الدعم وصورة QR.</p>'
-                        )"
-                    >
-                        ❤️ معرفة المزيد
-                    </button>
+                        <p>
+                            يمكنك التواصل مع فريق NOVA
+                            وإرسال استفساراتك أو المشاكل التي تواجهك.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="support-button"
+                            id="supportButton"
+                        >
+                            تواصل مع الدعم
+                        </button>
+
+                    </div>
+
+                    <div class="support-icon">
+                        💬
+                    </div>
 
                 </div>
 
@@ -798,133 +634,62 @@
     </main>
 
 
-    <!-- =====================================================
+    <!-- =========================
          FOOTER
-         ===================================================== -->
+    ========================== -->
 
     <footer class="nova-footer">
 
-        <div class="container">
+        <div class="footer-container">
 
-            <div class="footer-grid">
+            <div class="footer-brand">
 
+                <div class="nova-logo">
 
-                <div class="footer-brand">
+                    <span class="logo-icon">
+                        N
+                    </span>
 
-                    <div class="nova-logo">
-
-                        <span class="nova-logo-icon">
-                            N
-                        </span>
-
-                        <span>
-                            NOVA
-                        </span>
-
-                    </div>
-
-
-                    <p>
-                        منصة طموحة لبناء التطبيقات والمشاريع
-                        باستخدام الذكاء الاصطناعي.
-                    </p>
+                    <span class="logo-text">
+                        NOVA
+                    </span>
 
                 </div>
 
-
-                <div class="footer-column">
-
-                    <h4>
-                        المنصة
-                    </h4>
-
-                    <a href="#home">
-                        الرئيسية
-                    </a>
-
-                    <a href="#features">
-                        المميزات
-                    </a>
-
-                    <a href="#how">
-                        كيف تعمل؟
-                    </a>
-
-                </div>
-
-
-                <div class="footer-column">
-
-                    <h4>
-                        المشروع
-                    </h4>
-
-                    <a href="#technologies">
-                        التقنيات
-                    </a>
-
-                    <a href="#builder">
-                        إنشاء مشروع
-                    </a>
-
-                    <a href="#support">
-                        الدعم
-                    </a>
-
-                </div>
-
-
-                <div class="footer-column">
-
-                    <h4>
-                        الحساب
-                    </h4>
-
-                    <a
-                        href="#"
-                        onclick="
-                            novaOpenModal(
-                                'تسجيل الدخول',
-                                '<p>نظام الحسابات الحقيقي سيتم تفعيله باستخدام Supabase.</p>'
-                            );
-                            return false;
-                        "
-                    >
-                        تسجيل الدخول
-                    </a>
-
-                    <a
-                        href="#"
-                        onclick="
-                            novaOpenModal(
-                                'إنشاء حساب',
-                                '<p>إنشاء الحساب سيتم تفعيله في المرحلة القادمة.</p>'
-                            );
-                            return false;
-                        "
-                    >
-                        إنشاء حساب
-                    </a>
-
-                </div>
-
+                <p>
+                    منصة ذكية لبناء التطبيقات والمشاريع.
+                </p>
 
             </div>
 
 
-            <div class="footer-bottom">
+            <div class="footer-links">
 
-                <span>
-                    ©
-                    <span id="novaYear">
-                        2026
-                    </span>
-                    NOVA. جميع الحقوق محفوظة.
-                </span>
+                <a href="#home">
+                    الرئيسية
+                </a>
 
-                <span>
-                    AI App Builder
-                </span>
+                <a href="#features">
+                    المميزات
+                </a>
+
+                <a href="#how">
+                    كيف تعمل؟
+                </a>
+
+                <a href="#support">
+                    الدعم
+                </a>
+
+            </div>
+
+
+            <div class="footer-copy">
+
+                ©
+                <span id="currentYear"></span>
+                NOVA.
+                جميع الحقوق محفوظة.
 
             </div>
 
@@ -933,59 +698,46 @@
     </footer>
 
 
-    <!-- =====================================================
+    <!-- =========================
          MODAL
-         ===================================================== -->
+    ========================== -->
 
     <div
-        id="novaModal"
         class="nova-modal"
-        role="dialog"
-        aria-modal="true"
+        id="novaModal"
+        aria-hidden="true"
     >
 
-        <div class="modal-card">
+        <div class="modal-overlay"></div>
 
-            <div class="modal-header">
+        <div
+            class="modal-box"
+            role="dialog"
+            aria-modal="true"
+        >
 
-                <h3 id="modalTitle">
-                    NOVA
-                </h3>
-
-                <button
-                    id="modalClose"
-                    class="modal-close"
-                    type="button"
-                    aria-label="إغلاق"
-                >
-                    ×
-                </button>
-
-            </div>
-
+            <button
+                class="modal-close"
+                id="modalClose"
+                type="button"
+                aria-label="إغلاق"
+            >
+                ×
+            </button>
 
             <div
-                id="modalBody"
-                class="modal-body"
+                class="modal-icon"
+                id="modalIcon"
             >
-
-                <p>
-                    مرحبًا بك في NOVA.
-                </p>
-
+                ✨
             </div>
 
+            <h2 id="modalTitle">
+                NOVA
+            </h2>
 
-            <div class="modal-actions">
-
-                <button
-                    class="nova-btn nova-btn-secondary"
-                    type="button"
-                    onclick="novaCloseModal()"
-                >
-                    إغلاق
-                </button>
-
+            <div id="modalBody">
+                أهلاً بك في NOVA.
             </div>
 
         </div>
@@ -993,30 +745,72 @@
     </div>
 
 
-    <!-- =====================================================
+    <!-- =========================
          TOAST
-         ===================================================== -->
+    ========================== -->
 
     <div
-        id="novaToast"
         class="nova-toast"
-        role="status"
+        id="novaToast"
         aria-live="polite"
     >
+        <span id="toastMessage"></span>
     </div>
 
 
-    <!-- =====================================================
-         JAVASCRIPT
-         ===================================================== -->
+    <!-- =========================
+         SCRIPTS
+    ========================== -->
 
     <script src="config.js"></script>
 
     <script src="supabase.js"></script>
 
+    <script src="auth.js"></script>
+
     <script src="app.js"></script>
 
 
-</body>
+    <!-- =========================
+         SMALL PAGE LOGIC
+    ========================== -->
 
-</html>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const prompt =
+                document.getElementById("novaPrompt");
+
+            const counter =
+                document.getElementById("promptCounter");
+
+            const ideas =
+                document.querySelectorAll(".idea-button");
+
+            const supportButton =
+                document.getElementById("supportButton");
+
+            const loginLink =
+                document.getElementById("loginNavLink");
+
+            const currentYear =
+                document.getElementById("currentYear");
+
+
+            /* السنة */
+
+            if (currentYear) {
+
+                currentYear.textContent =
+                    new Date().getFullYear();
+
+            }
+
+
+            /* عداد النص */
+
+            function updateCounter() {
+
+                if (!prompt || !counter) {
+                   

@@ -1,338 +1,1022 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-  <title>NOVA — أنشئ تطبيقك بالذكاء الاصطناعي</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-  <meta
-    name="description"
-    content="NOVA منصة لإنشاء التطبيقات والمواقع من وصف نصي باستخدام الذكاء الاصطناعي."
-  >
+    <meta
+        name="description"
+        content="NOVA - منصة ذكية لبناء التطبيقات والمشاريع باستخدام الذكاء الاصطناعي"
+    >
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta
+        name="theme-color"
+        content="#4285f4"
+    >
 
-    :root {
-      --nova-bg: #070b14;
-      --nova-bg-2: #0b1220;
-      --nova-card: rgba(18, 27, 44, 0.78);
-      --nova-card-2: rgba(25, 36, 57, 0.72);
-      --nova-border: rgba(255, 255, 255, 0.10);
-      --nova-text: #f5f7fb;
-      --nova-muted: #9da9bc;
-      --nova-primary: #6d5dfc;
-      --nova-primary-2: #8a7dff;
-      --nova-blue: #4285f4;
-      --nova-green: #34a853;
-      --nova-yellow: #fbbc05;
-      --nova-red: #ea4335;
-      --nova-github: #f0f0f0;
-      --nova-radius: 20px;
-      --nova-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
-    }
+    <title>NOVA — AI App Builder</title>
 
-    html {
-      scroll-behavior: smooth;
-    }
+    <!-- =====================================================
+         NOVA MAIN CSS
+         ===================================================== -->
 
-    body {
-      min-height: 100vh;
-      font-family:
-        "Segoe UI",
-        Tahoma,
-        Arial,
-        sans-serif;
-      color: var(--nova-text);
-      background:
-        radial-gradient(
-          circle at 15% 10%,
-          rgba(66, 133, 244, 0.14),
-          transparent 28%
-        ),
-        radial-gradient(
-          circle at 85% 15%,
-          rgba(109, 93, 252, 0.18),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 50% 100%,
-          rgba(52, 168, 83, 0.08),
-          transparent 35%
-        ),
-        var(--nova-bg);
-      overflow-x: hidden;
-    }
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image:
-        linear-gradient(
-          rgba(255,255,255,0.025) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255,255,255,0.025) 1px,
-          transparent 1px
-        );
-      background-size: 45px 45px;
-      mask-image: linear-gradient(
-        to bottom,
-        black,
-        transparent 90%
-      );
-      z-index: -1;
-    }
+<body>
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
 
-    button,
-    textarea,
-    input {
-      font: inherit;
-    }
+    <header class="nova-header">
 
-    button {
-      cursor: pointer;
-    }
+        <div class="container nova-header-inner">
 
-    .container {
-      width: min(1200px, calc(100% - 40px));
-      margin: auto;
-    }
+            <a
+                href="#home"
+                class="nova-logo"
+            >
 
-    /* ================================
-       HEADER
-    ================================= */
+                <span class="nova-logo-icon">
+                    N
+                </span>
 
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid var(--nova-border);
-      background: rgba(7, 11, 20, 0.72);
-      backdrop-filter: blur(18px);
-    }
+                <span>
+                    NOVA
+                </span>
 
-    .header-inner {
-      height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-    }
+            </a>
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: max-content;
-    }
 
-    .brand-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-      font-size: 20px;
-      color: white;
-      background:
-        linear-gradient(
-          135deg,
-          var(--nova-blue),
-          var(--nova-primary),
-          #a85cff
-        );
-      box-shadow:
-        0 8px 30px rgba(109, 93, 252, 0.35);
-    }
+            <nav class="nova-nav">
 
-    .brand-name {
-      font-size: 21px;
-      font-weight: 850;
-      letter-spacing: 0.3px;
-    }
+                <a href="#home">
+                    الرئيسية
+                </a>
 
-    .brand-name span {
-      color: var(--nova-primary-2);
-    }
+                <a href="#technologies">
+                    التقنيات
+                </a>
 
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
+                <a href="#features">
+                    المميزات
+                </a>
 
-    .nav-link {
-      color: var(--nova-muted);
-      padding: 10px 14px;
-      border-radius: 10px;
-      transition: 0.2s ease;
-      font-size: 14px;
-    }
+                <a href="#how">
+                    كيف تعمل؟
+                </a>
 
-    .nav-link:hover {
-      color: white;
-      background: rgba(255,255,255,0.06);
-    }
+                <a href="#support">
+                    ادعمنا
+                </a>
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
+            </nav>
 
-    .btn {
-      border: 1px solid transparent;
-      border-radius: 11px;
-      padding: 11px 17px;
-      color: white;
-      transition:
-        transform 0.2s ease,
-        background 0.2s ease,
-        border-color 0.2s ease;
-    }
 
-    .btn:hover {
-      transform: translateY(-2px);
-    }
+            <div class="header-actions">
 
-    .btn-secondary {
-      background: rgba(255,255,255,0.055);
-      border-color: var(--nova-border);
-    }
+                <button
+                    class="nova-btn nova-btn-secondary"
+                    type="button"
+                    onclick="novaOpenModal(
+                        'تسجيل الدخول',
+                        '<p>سيتم تفعيل نظام تسجيل الدخول الحقيقي في الخطوات القادمة باستخدام Supabase Auth.</p>'
+                    )"
+                >
+                    تسجيل الدخول
+                </button>
 
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.09);
-    }
+                <button
+                    class="nova-btn nova-btn-primary"
+                    type="button"
+                    onclick="novaScroll('#builder')"
+                >
+                    ابدأ الآن
+                </button>
 
-    .btn-primary {
-      background:
-        linear-gradient(
-          135deg,
-          var(--nova-primary),
-          #5141db
-        );
-      box-shadow:
-        0 10px 30px rgba(109, 93, 252, 0.25);
-    }
+            </div>
 
-    .btn-primary:hover {
-      box-shadow:
-        0 15px 38px rgba(109, 93, 252, 0.38);
-    }
 
-    /* ================================
-       HERO
-    ================================= */
+            <button
+                id="mobileMenuButton"
+                class="mobile-menu-button"
+                type="button"
+                aria-label="فتح القائمة"
+            >
+                ☰
+            </button>
 
-    .hero {
-      padding: 95px 0 70px;
-      position: relative;
-    }
+        </div>
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 55px;
-      align-items: center;
-    }
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 8px 13px;
-      border: 1px solid var(--nova-border);
-      border-radius: 999px;
-      color: #cbd4e3;
-      background: rgba(255,255,255,0.045);
-      font-size: 13px;
-      margin-bottom: 22px;
-    }
+        <div
+            id="mobileMenu"
+            class="mobile-menu"
+        >
 
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #36d399;
-      box-shadow: 0 0 14px rgba(54,211,153,0.8);
-    }
+            <a href="#home">
+                الرئيسية
+            </a>
 
-    .hero-title {
-      font-size: clamp(42px, 6vw, 76px);
-      line-height: 1.04;
-      letter-spacing: -2.5px;
-      font-weight: 950;
-      margin-bottom: 24px;
-    }
+            <a href="#technologies">
+                التقنيات
+            </a>
 
-    .hero-title .gradient {
-      background:
-        linear-gradient(
-          90deg,
-          #ffffff,
-          #9f95ff,
-          #5d8cff
-        );
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+            <a href="#features">
+                المميزات
+            </a>
 
-    .hero-description {
-      max-width: 680px;
-      color: var(--nova-muted);
-      line-height: 1.9;
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
+            <a href="#how">
+                كيف تعمل؟
+            </a>
 
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
+            <a href="#support">
+                ادعمنا
+            </a>
 
-    .hero-note {
-      color: #758198;
-      font-size: 13px;
-    }
+        </div>
 
-    /* ================================
-       BUILDER CARD
-    ================================= */
+    </header>
 
-    .builder-card {
-      position: relative;
-      padding: 18px;
-      border-radius: 27px;
-      border: 1px solid var(--nova-border);
-      background:
-        linear-gradient(
-          145deg,
-          rgba(26, 37, 59, 0.94),
-          rgba(11, 17, 29, 0.94)
-        );
-      box-shadow: var(--nova-shadow);
-    }
 
-    .window-bar {
-      height: 40px;
-      display: flex;
-      align
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <main>
+
+        <section
+            id="home"
+            class="hero"
+        >
+
+            <div class="container">
+
+                <div class="hero-content">
+
+                    <div class="hero-badge">
+
+                        ✨
+                        منصة بناء التطبيقات بالذكاء الاصطناعي
+
+                    </div>
+
+
+                    <h1>
+
+                        اكتب فكرتك...
+
+                        <br>
+
+                        <span class="gradient-text">
+                            وNOVA تبنيها معك
+                        </span>
+
+                    </h1>
+
+
+                    <p class="hero-description">
+
+                        NOVA هي منصة تهدف إلى تحويل وصفك المكتوب
+                        إلى مشروع تطبيق حقيقي، مع ملفات وكود
+                        وقاعدة بيانات وذكاء اصطناعي وأدوات تطوير.
+
+                    </p>
+
+
+                    <div class="hero-actions">
+
+                        <button
+                            class="nova-btn nova-btn-primary nova-btn-large"
+                            type="button"
+                            onclick="novaScroll('#builder')"
+                        >
+                            🚀 ابدأ بناء تطبيقك
+                        </button>
+
+
+                        <button
+                            class="nova-btn nova-btn-secondary nova-btn-large"
+                            type="button"
+                            onclick="novaScroll('#how')"
+                        >
+                            ▶ كيف تعمل NOVA؟
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     BUILDER
+                     ================================================= -->
+
+                <div
+                    id="builder"
+                    class="prompt-wrapper"
+                >
+
+                    <div class="prompt-card">
+
+                        <textarea
+                            id="novaPrompt"
+                            maxlength="20000"
+                            placeholder="اكتب فكرتك هنا... مثال: أريد تطبيق متجر ملابس يحتوي على تسجيل دخول، منتجات، سلة شراء، طلبات، لوحة تحكم، وقاعدة بيانات."
+                            aria-label="وصف التطبيق"
+                        ></textarea>
+
+
+                        <div class="prompt-bottom">
+
+                            <span class="prompt-hint">
+
+                                💡 كلما كان وصفك أوضح،
+                                أصبح بناء المشروع أكثر دقة.
+
+                            </span>
+
+
+                            <button
+                                id="generateButton"
+                                class="nova-btn nova-btn-primary nova-btn-large"
+                                type="button"
+                            >
+
+                                🚀
+                                ابدأ بناء التطبيق
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             STATS
+             ===================================================== -->
+
+        <section class="stats">
+
+            <div class="container">
+
+                <div class="stats-grid">
+
+                    <div class="stat">
+
+                        <div class="stat-number">
+                            AI
+                        </div>
+
+                        <div class="stat-label">
+                            محرك ذكاء اصطناعي
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-number">
+                            100+
+                        </div>
+
+                        <div class="stat-label">
+                            ميزة قابلة للتطوير
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-number">
+                            Cloud
+                        </div>
+
+                        <div class="stat-label">
+                            بنية سحابية
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="stat-number">
+                            24/7
+                        </div>
+
+                        <div class="stat-label">
+                            جاهزية المنصة
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             TECHNOLOGIES
+             ===================================================== -->
+
+        <section
+            id="technologies"
+            class="section"
+        >
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <h2>
+                        مبنية على تقنيات قوية
+                    </h2>
+
+                    <p>
+                        سنربط NOVA تدريجيًا بخدمات حقيقية
+                        لبناء منصة قابلة للتوسع.
+                    </p>
+
+                </div>
+
+
+                <div class="technology-grid">
+
+                    <div class="tech-card">
+
+                        <div class="tech-icon">
+                            G
+                        </div>
+
+                        <h3>
+                            Google
+                        </h3>
+
+                        <p>
+                            تقنيات وذكاء اصطناعي
+                        </p>
+
+                    </div>
+
+
+                    <div class="tech-card">
+
+                        <div class="tech-icon">
+                            F
+                        </div>
+
+                        <h3>
+                            Firebase
+                        </h3>
+
+                        <p>
+                            خدمات التطبيقات
+                        </p>
+
+                    </div>
+
+
+                    <div class="tech-card">
+
+                        <div class="tech-icon">
+                            M
+                        </div>
+
+                        <h3>
+                            Microsoft
+                        </h3>
+
+                        <p>
+                            تقنيات سحابية وأدوات
+                        </p>
+
+                    </div>
+
+
+                    <div class="tech-card">
+
+                        <div class="tech-icon">
+                            Git
+                        </div>
+
+                        <h3>
+                            GitHub
+                        </h3>
+
+                        <p>
+                            إدارة الكود والمشاريع
+                        </p>
+
+                    </div>
+
+
+                    <div class="tech-card">
+
+                        <div class="tech-icon">
+                            S
+                        </div>
+
+                        <h3>
+                            Supabase
+                        </h3>
+
+                        <p>
+                            قاعدة البيانات والمصادقة
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FEATURES
+             ===================================================== -->
+
+        <section
+            id="features"
+            class="section features"
+        >
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <h2>
+                        كل ما تحتاجه لبناء مشروعك
+                    </h2>
+
+                    <p>
+                        NOVA مصممة لتكبر من واجهة بسيطة
+                        إلى منصة تطوير متكاملة.
+                    </p>
+
+                </div>
+
+
+                <div class="features-grid">
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            🤖
+                        </div>
+
+                        <h3>
+                            الذكاء الاصطناعي
+                        </h3>
+
+                        <p>
+                            تحليل فكرة المشروع وتحويلها
+                            إلى خطة تنفيذ وكود وملفات.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            🧩
+                        </div>
+
+                        <h3>
+                            بناء المشاريع
+                        </h3>
+
+                        <p>
+                            إنشاء هيكل المشروع وملفاته
+                            وإدارتها من مكان واحد.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            🗄️
+                        </div>
+
+                        <h3>
+                            قاعدة البيانات
+                        </h3>
+
+                        <p>
+                            حفظ المستخدمين والمشاريع
+                            والملفات والطلبات بشكل منظم.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            🔐
+                        </div>
+
+                        <h3>
+                            تسجيل الدخول
+                        </h3>
+
+                        <p>
+                            نظام حسابات ومصادقة حقيقي
+                            باستخدام خدمات آمنة.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            👁️
+                        </div>
+
+                        <h3>
+                            المعاينة
+                        </h3>
+
+                        <p>
+                            معاينة المشاريع والتطبيقات
+                            قبل نشرها.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            ☁️
+                        </div>
+
+                        <h3>
+                            التخزين السحابي
+                        </h3>
+
+                        <p>
+                            حفظ الملفات والصور والأصول
+                            الخاصة بالمشاريع.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            📁
+                        </div>
+
+                        <h3>
+                            إدارة الملفات
+                        </h3>
+
+                        <p>
+                            تنظيم ملفات المشروع وإمكانية
+                            تعديلها وتحديثها.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            💬
+                        </div>
+
+                        <h3>
+                            الدعم
+                        </h3>
+
+                        <p>
+                            نظام رسائل وشكاوى وطلبات
+                            للتواصل مع إدارة المنصة.
+                        </p>
+
+                    </div>
+
+
+                    <div class="feature-card">
+
+                        <div class="feature-icon">
+                            🛡️
+                        </div>
+
+                        <h3>
+                            الإدارة والأمان
+                        </h3>
+
+                        <p>
+                            لوحة إدارة منفصلة وإعدادات
+                            وصلاحيات وسجلات للنظام.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HOW IT WORKS
+             ===================================================== -->
+
+        <section
+            id="how"
+            class="section"
+        >
+
+            <div class="container">
+
+                <div class="section-header">
+
+                    <h2>
+                        كيف تعمل NOVA؟
+                    </h2>
+
+                    <p>
+                        العملية تبدأ من فكرتك ثم تتحول
+                        تدريجيًا إلى مشروع قابل للتطوير.
+                    </p>
+
+                </div>
+
+
+                <div class="steps-grid">
+
+
+                    <div class="step-card">
+
+                        <span class="step-number">
+                            1
+                        </span>
+
+                        <div class="step-icon">
+                            ✍️
+                        </div>
+
+                        <h3>
+                            اكتب فكرتك
+                        </h3>
+
+                        <p>
+                            اشرح للتطبيق ماذا تريد أن يبني،
+                            مثل متجر أو منصة أو لوحة تحكم
+                            أو نظام خدمات.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-card">
+
+                        <span class="step-number">
+                            2
+                        </span>
+
+                        <div class="step-icon">
+                            🧠
+                        </div>
+
+                        <h3>
+                            تحليل الفكرة
+                        </h3>
+
+                        <p>
+                            محرك NOVA سيحلل المتطلبات
+                            ويقسم المشروع إلى أجزاء
+                            ومكونات وملفات.
+                        </p>
+
+                    </div>
+
+
+                    <div class="step-card">
+
+                        <span class="step-number">
+                            3
+                        </span>
+
+                        <div class="step-icon">
+                            🚀
+                        </div>
+
+                        <h3>
+                            بناء المشروع
+                        </h3>
+
+                        <p>
+                            يتم إنشاء الملفات والكود
+                            وقاعدة البيانات والوظائف
+                            المطلوبة حسب التصميم.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SUPPORT
+             ===================================================== -->
+
+        <section
+            id="support"
+            class="section support"
+        >
+
+            <div class="container">
+
+                <div class="support-box">
+
+                    <h2>
+                        ❤️ ادعم مشروع NOVA
+                    </h2>
+
+                    <p>
+                        سنضيف لاحقًا صفحة دعم كاملة يمكن
+                        لإدارة NOVA التحكم بها، بما في ذلك
+                        معلومات المحفظة ورمز QR والصورة
+                        ورسالة الدعم.
+                    </p>
+
+
+                    <button
+                        class="nova-btn nova-btn-primary nova-btn-large"
+                        type="button"
+                        onclick="novaOpenModal(
+                            'دعم NOVA',
+                            '<p>صفحة الدعم الحقيقية سيتم ربطها بقاعدة البيانات ولوحة الإدارة.</p><p style=&quot;margin-top:10px&quot;>من لوحة الإدارة يمكن تغيير بيانات الدعم وصورة QR.</p>'
+                        )"
+                    >
+                        ❤️ معرفة المزيد
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="nova-footer">
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+
+                <div class="footer-brand">
+
+                    <div class="nova-logo">
+
+                        <span class="nova-logo-icon">
+                            N
+                        </span>
+
+                        <span>
+                            NOVA
+                        </span>
+
+                    </div>
+
+
+                    <p>
+                        منصة طموحة لبناء التطبيقات والمشاريع
+                        باستخدام الذكاء الاصطناعي.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>
+                        المنصة
+                    </h4>
+
+                    <a href="#home">
+                        الرئيسية
+                    </a>
+
+                    <a href="#features">
+                        المميزات
+                    </a>
+
+                    <a href="#how">
+                        كيف تعمل؟
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>
+                        المشروع
+                    </h4>
+
+                    <a href="#technologies">
+                        التقنيات
+                    </a>
+
+                    <a href="#builder">
+                        إنشاء مشروع
+                    </a>
+
+                    <a href="#support">
+                        الدعم
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>
+                        الحساب
+                    </h4>
+
+                    <a
+                        href="#"
+                        onclick="
+                            novaOpenModal(
+                                'تسجيل الدخول',
+                                '<p>نظام الحسابات الحقيقي سيتم تفعيله باستخدام Supabase.</p>'
+                            );
+                            return false;
+                        "
+                    >
+                        تسجيل الدخول
+                    </a>
+
+                    <a
+                        href="#"
+                        onclick="
+                            novaOpenModal(
+                                'إنشاء حساب',
+                                '<p>إنشاء الحساب سيتم تفعيله في المرحلة القادمة.</p>'
+                            );
+                            return false;
+                        "
+                    >
+                        إنشاء حساب
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    ©
+                    <span id="novaYear">
+                        2026
+                    </span>
+                    NOVA. جميع الحقوق محفوظة.
+                </span>
+
+                <span>
+                    AI App Builder
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         MODAL
+         ===================================================== -->
+
+    <div
+        id="novaModal"
+        class="nova-modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
+        <div class="modal-card">
+
+            <div class="modal-header">
+
+                <h3 id="modalTitle">
+                    NOVA
+                </h3>
+
+                <button
+                    id="modalClose"
+                    class="modal-close"
+                    type="button"
+                    aria-label="إغلاق"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                id="modalBody"
+                class="modal-body"
+            >
+
+                <p>
+                    مرحبًا بك في NOVA.
+                </p>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    class="nova-btn nova-btn-secondary"
+                    type="button"
+                    onclick="novaCloseModal()"
+                >
+                    إغلاق
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+         ===================================================== -->
+
+    <div
+        id="novaToast"
+        class="nova-toast"
+        role="status"
+        aria-live="polite"
+    >
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="config.js"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="app.js"></script>
+
+
+</body>
+
+</html>

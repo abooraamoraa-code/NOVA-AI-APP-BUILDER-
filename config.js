@@ -4,12 +4,6 @@
 =========================================================
 NOVA CONFIG
 =========================================================
-
-مهم:
-- هذا الملف يحتوي فقط على الإعدادات العامة.
-- لا نضع هنا مفاتيح الذكاء الاصطناعي السرية.
-- مفاتيح AI السرية سنضعها لاحقًا داخل Supabase.
-=========================================================
 */
 
 window.NOVA_CONFIG = {
@@ -21,14 +15,12 @@ window.NOVA_CONFIG = {
     ENVIRONMENT: "production",
 
     SUPABASE: {
-        URL: "https://cjveqwqxfvtenarybbvj.supabase.co",
 
-        /*
-         * ضع هنا Publishable Key الخاص بمشروع Supabase.
-         *
-         * لا تضع Service Role Key هنا.
-         */
-        PUBLISHABLE_KEY: ""
+        URL:
+            "https://cjveqwqxfvtenarybbvj.supabase.co",
+
+        PUBLISHABLE_KEY:
+            "sb_publishable_PeWAKe3Pf_JknU7eO1MJVg_kvOrE1YO"
     },
 
     AI: {

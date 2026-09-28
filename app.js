@@ -1,31 +1,43 @@
 "use strict";
 
 /* =========================================================
-   NOVA APP BUILDER — FRONTEND ENGINE
+   NOVA APP BUILDER — REAL AI FRONTEND ENGINE
    ========================================================= */
 
 const NOVA = {
-    version: "1.0.0",
+    version: "2.0.0",
 
     state: {
         mobileMenu: false,
         modal: false,
         generating: false,
         currentPrompt: "",
-        user: null
+        user: null,
+        lastAIResult: null
     },
 
     elements: {},
+    toastTimer: null,
+
+    /* =====================================================
+       INIT
+       ===================================================== */
 
     init() {
         this.cacheElements();
         this.bindEvents();
         this.updateYear();
         this.loadSavedData();
+
         console.log("NOVA initialized:", this.version);
     },
 
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
+
     cacheElements() {
+
         this.elements.prompt =
             document.querySelector("#novaPrompt");
 
@@ -51,9 +63,14 @@ const NOVA = {
             document.querySelector("#novaYear");
     },
 
+    /* =====================================================
+       EVENTS
+       ===================================================== */
+
     bindEvents() {
 
         if (this.elements.generateButton) {
+
             this.elements.generateButton.addEventListener(
                 "click",
                 () => this.generateProject()
@@ -61,6 +78,7 @@ const NOVA = {
         }
 
         if (this.elements.modalClose) {
+
             this.elements.modalClose.addEventListener(
                 "click",
                 () => this.closeModal()
@@ -68,9 +86,11 @@ const NOVA = {
         }
 
         if (this.elements.modal) {
+
             this.elements.modal.addEventListener(
                 "click",
                 (event) => {
+
                     if (
                         event.target ===
                         this.elements.modal
@@ -82,6 +102,7 @@ const NOVA = {
         }
 
         if (this.elements.mobileButton) {
+
             this.elements.mobileButton.addEventListener(
                 "click",
                 () => this.toggleMobileMenu()
@@ -91,7 +112,9 @@ const NOVA = {
         document.addEventListener(
             "keydown",
             (event) => {
+
                 if (event.key === "Escape") {
+
                     this.closeModal();
                     this.closeMobileMenu();
                 }
@@ -100,13 +123,18 @@ const NOVA = {
                     event.ctrlKey &&
                     event.key.toLowerCase() === "enter"
                 ) {
+
                     this.generateProject();
                 }
             }
         );
     },
 
-    generateProject() {
+    /* =====================================================
+       REAL AI REQUEST
+       ===================================================== */
+
+    async generateProject() {
 
         if (this.state.generating) {
             return;
@@ -118,6 +146,7 @@ const NOVA = {
                 : "";
 
         if (!prompt) {
+
             this.showToast(
                 "اكتب وصف التطبيق أولاً."
             );
@@ -130,6 +159,7 @@ const NOVA = {
         }
 
         if (prompt.length < 10) {
+
             this.showToast(
                 "اكتب وصفًا أطول قليلًا حتى تفهم NOVA المطلوب."
             );
@@ -141,52 +171,385 @@ const NOVA = {
         this.state.generating = true;
 
         this.setGenerateLoading(true);
-
         this.savePrompt(prompt);
 
-        /*
-         * في هذه المرحلة الواجهة جاهزة.
-         * في الخطوات التالية سنربط هذا الزر
-         * بـ Supabase ثم بمحرك الذكاء الاصطناعي.
-         */
+        this.openModal(
+            "NOVA تعمل الآن",
+            `
+                <div style="
+                    text-align:center;
+                    padding:20px 5px;
+                ">
 
-        setTimeout(() => {
+                    <div class="nova-loading"
+                         style="
+                            width:32px;
+                            height:32px;
+                            margin:0 auto 18px;
+                         ">
+                    </div>
 
-            this.state.generating = false;
+                    <h3 style="
+                        margin:0 0 10px;
+                    ">
+                        جارٍ الاتصال بالذكاء الاصطناعي...
+                    </h3>
+
+                    <p style="
+                        margin:0;
+                        color:#667085;
+                    ">
+                        NOVA ترسل طلبك إلى محرك Gemini.
+                    </p>
+
+                    <div style="
+                        margin-top:18px;
+                        padding:14px;
+                        background:#f8fafc;
+                        border:1px solid #e5e7eb;
+                        border-radius:12px;
+                        text-align:right;
+                        white-space:pre-wrap;
+                        word-break:break-word;
+                    ">
+                        ${this.escapeHTML(prompt)}
+                    </div>
+
+                </div>
+            `
+        );
+
+        try {
+
+            const result =
+                await this.callNOVAAI(prompt);
+
+            this.state.lastAIResult = result;
 
             this.setGenerateLoading(false);
+            this.state.generating = false;
 
-            this.openModal(
-                "NOVA جاهزة للربط بالذكاء الاصطناعي",
-                `
-                <p>
-                    تم استلام طلبك بنجاح.
-                </p>
+            this.showAIResult(result);
 
-                <p style="margin-top:12px">
-                    <strong>الطلب:</strong>
-                </p>
+        } catch (error) {
 
-                <div style="
-                    margin-top:10px;
-                    padding:15px;
-                    background:#f8fafc;
-                    border:1px solid #e5e7eb;
-                    border-radius:12px;
-                    color:#344054;
-                    white-space:pre-wrap;
-                    word-break:break-word;
-                ">${this.escapeHTML(prompt)}</div>
-
-                <p style="margin-top:15px">
-                    الخطوة التالية ستكون توصيل NOVA
-                    بمحرك الذكاء الاصطناعي الحقيقي.
-                </p>
-                `
+            console.error(
+                "NOVA AI ERROR:",
+                error
             );
 
-        }, 700);
+            this.setGenerateLoading(false);
+            this.state.generating = false;
+
+            this.showAIError(error);
+        }
     },
+
+    /* =====================================================
+       CALL SUPABASE EDGE FUNCTION
+       ===================================================== */
+
+    async callNOVAAI(prompt) {
+
+        const endpoint =
+            "https://cjveqwqxfvtenarybbvj.supabase.co/functions/v1/nova-ai";
+
+        const response =
+            await fetch(
+                endpoint,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        prompt: prompt
+                    })
+                }
+            );
+
+        let data = null;
+
+        try {
+
+            data =
+                await response.json();
+
+        } catch (error) {
+
+            throw new Error(
+                "لم يتمكن الموقع من قراءة رد الخادم."
+            );
+        }
+
+        if (!response.ok) {
+
+            throw new Error(
+                data?.error ||
+                data?.details ||
+                `خطأ من الخادم: ${response.status}`
+            );
+        }
+
+        if (!data || data.success !== true) {
+
+            throw new Error(
+                data?.error ||
+                "لم يرجع الذكاء الاصطناعي نتيجة صحيحة."
+            );
+        }
+
+        if (!data.result) {
+
+            throw new Error(
+                "وصل الرد ولكن بدون محتوى."
+            );
+        }
+
+        return data;
+    },
+
+    /* =====================================================
+       DISPLAY AI RESULT
+       ===================================================== */
+
+    showAIResult(data) {
+
+        const result =
+            String(data.result || "");
+
+        const provider =
+            data.provider ||
+            "gemini";
+
+        const model =
+            data.model ||
+            "AI";
+
+        const keyNumber =
+            data.keyNumber
+                ? `المفتاح المستخدم: ${data.keyNumber}`
+                : "";
+
+        const formattedResult =
+            this.formatAIText(result);
+
+        this.openModal(
+            "تم استلام رد NOVA 🤖",
+            `
+                <div style="
+                    margin-bottom:16px;
+                    padding:12px 14px;
+                    background:#f0fdf4;
+                    border:1px solid #bbf7d0;
+                    border-radius:12px;
+                    color:#166534;
+                ">
+                    <strong>اتصال ناجح بالذكاء الاصطناعي</strong>
+                    <div style="
+                        margin-top:5px;
+                        font-size:13px;
+                    ">
+                        Provider: ${this.escapeHTML(provider)}
+                        <br>
+                        Model: ${this.escapeHTML(model)}
+                        ${
+                            keyNumber
+                                ? `<br>${this.escapeHTML(keyNumber)}`
+                                : ""
+                        }
+                    </div>
+                </div>
+
+                <div style="
+                    padding:18px;
+                    background:#f8fafc;
+                    border:1px solid #e5e7eb;
+                    border-radius:14px;
+                    line-height:1.9;
+                    color:#344054;
+                    max-height:55vh;
+                    overflow:auto;
+                    direction:rtl;
+                    text-align:right;
+                ">
+                    ${formattedResult}
+                </div>
+
+                <div style="
+                    margin-top:16px;
+                    display:flex;
+                    gap:10px;
+                    flex-wrap:wrap;
+                ">
+
+                    <button
+                        type="button"
+                        onclick="NOVA.copyAIResult()"
+                        style="
+                            border:0;
+                            padding:11px 16px;
+                            border-radius:10px;
+                            cursor:pointer;
+                            background:#111827;
+                            color:white;
+                            font-weight:600;
+                        "
+                    >
+                        نسخ الرد
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="NOVA.closeModal()"
+                        style="
+                            border:1px solid #d0d5dd;
+                            padding:11px 16px;
+                            border-radius:10px;
+                            cursor:pointer;
+                            background:white;
+                            color:#344054;
+                            font-weight:600;
+                        "
+                    >
+                        إغلاق
+                    </button>
+
+                </div>
+            `
+        );
+    },
+
+    /* =====================================================
+       AI ERROR
+       ===================================================== */
+
+    showAIError(error) {
+
+        const message =
+            error instanceof Error
+                ? error.message
+                : String(error);
+
+        this.openModal(
+            "حدث خطأ في الاتصال",
+            `
+                <div style="
+                    padding:18px;
+                    background:#fef2f2;
+                    border:1px solid #fecaca;
+                    border-radius:14px;
+                    color:#991b1b;
+                    line-height:1.8;
+                ">
+                    <strong>
+                        لم تتمكن NOVA من الحصول على رد من الذكاء الاصطناعي.
+                    </strong>
+
+                    <div style="
+                        margin-top:12px;
+                        padding:12px;
+                        background:white;
+                        border-radius:10px;
+                        border:1px solid #fee2e2;
+                        color:#7f1d1d;
+                        direction:rtl;
+                        text-align:right;
+                        word-break:break-word;
+                    ">
+                        ${this.escapeHTML(message)}
+                    </div>
+                </div>
+
+                <p style="
+                    margin-top:15px;
+                    color:#667085;
+                ">
+                    إذا ظهر هذا الخطأ، سنفحص Edge Function
+                    ونصلحه في الخطوة التالية.
+                </p>
+            `
+        );
+    },
+
+    /* =====================================================
+       FORMAT AI TEXT
+       ===================================================== */
+
+    formatAIText(text) {
+
+        let safe =
+            this.escapeHTML(text);
+
+        safe =
+            safe.replace(
+                /\*\*(.*?)\*\*/g,
+                "<strong>$1</strong>"
+            );
+
+        safe =
+            safe.replace(
+                /`([^`]+)`/g,
+                `<code style="
+                    background:#eef2ff;
+                    padding:2px 6px;
+                    border-radius:5px;
+                    direction:ltr;
+                    display:inline-block;
+                ">$1</code>`
+            );
+
+        safe =
+            safe.replace(
+                /\n/g,
+                "<br>"
+            );
+
+        return safe;
+    },
+
+    /* =====================================================
+       COPY AI RESULT
+       ===================================================== */
+
+    async copyAIResult() {
+
+        const result =
+            this.state.lastAIResult?.result;
+
+        if (!result) {
+
+            this.showToast(
+                "لا يوجد رد لنسخه."
+            );
+
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(
+                String(result)
+            );
+
+            this.showToast(
+                "تم نسخ رد NOVA."
+            );
+
+        } catch (error) {
+
+            this.showToast(
+                "تعذر النسخ من المتصفح."
+            );
+        }
+    },
+
+    /* =====================================================
+       LOADING BUTTON
+       ===================================================== */
 
     setGenerateLoading(loading) {
 
@@ -202,7 +565,7 @@ const NOVA = {
 
             this.elements.generateButton.innerHTML = `
                 <span class="nova-loading"></span>
-                جارٍ تجهيز الطلب...
+                جارٍ الاتصال بالذكاء الاصطناعي...
             `;
 
             this.elements.generateButton.disabled = true;
@@ -214,9 +577,14 @@ const NOVA = {
                     .originalText ||
                 "ابدأ بناء التطبيق";
 
-            this.elements.generateButton.disabled = false;
+            this.elements.generateButton.disabled =
+                false;
         }
     },
+
+    /* =====================================================
+       MODAL
+       ===================================================== */
 
     openModal(title, content) {
 
@@ -235,18 +603,25 @@ const NOVA = {
             );
 
         if (titleElement) {
-            titleElement.textContent = title;
+
+            titleElement.textContent =
+                title;
         }
 
         if (bodyElement) {
-            bodyElement.innerHTML = content;
+
+            bodyElement.innerHTML =
+                content;
         }
 
-        this.elements.modal.classList.add("active");
+        this.elements.modal.classList.add(
+            "active"
+        );
 
         this.state.modal = true;
 
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow =
+            "hidden";
     },
 
     closeModal() {
@@ -261,8 +636,13 @@ const NOVA = {
 
         this.state.modal = false;
 
-        document.body.style.overflow = "";
+        document.body.style.overflow =
+            "";
     },
+
+    /* =====================================================
+       MOBILE MENU
+       ===================================================== */
 
     toggleMobileMenu() {
 
@@ -292,7 +672,14 @@ const NOVA = {
         );
     },
 
-    showToast(message, duration = 3500) {
+    /* =====================================================
+       TOAST
+       ===================================================== */
+
+    showToast(
+        message,
+        duration = 3500
+    ) {
 
         if (!this.elements.toast) {
             return;
@@ -310,14 +697,21 @@ const NOVA = {
         );
 
         this.toastTimer =
-            setTimeout(() => {
+            setTimeout(
+                () => {
 
-                this.elements.toast.classList.remove(
-                    "show"
-                );
+                    this.elements.toast.classList.remove(
+                        "show"
+                    );
 
-            }, duration);
+                },
+                duration
+            );
     },
+
+    /* =====================================================
+       LOCAL STORAGE
+       ===================================================== */
 
     savePrompt(prompt) {
 
@@ -351,6 +745,7 @@ const NOVA = {
                 this.elements.prompt &&
                 !this.elements.prompt.value
             ) {
+
                 this.elements.prompt.value =
                     savedPrompt;
             }
@@ -364,6 +759,10 @@ const NOVA = {
         }
     },
 
+    /* =====================================================
+       YEAR
+       ===================================================== */
+
     updateYear() {
 
         if (this.elements.year) {
@@ -372,6 +771,10 @@ const NOVA = {
                 new Date().getFullYear();
         }
     },
+
+    /* =====================================================
+       ESCAPE HTML
+       ===================================================== */
 
     escapeHTML(value) {
 
@@ -383,6 +786,10 @@ const NOVA = {
 
         return div.innerHTML;
     },
+
+    /* =====================================================
+       SCROLL
+       ===================================================== */
 
     scrollTo(selector) {
 
@@ -403,22 +810,34 @@ const NOVA = {
 };
 
 /* =========================================================
-   GLOBAL NOVA HELPERS
+   GLOBAL HELPERS
    ========================================================= */
 
-window.NOVA = NOVA;
+window.NOVA =
+    NOVA;
 
-window.novaScroll = function(selector) {
-    NOVA.scrollTo(selector);
-};
+window.novaScroll =
+    function(selector) {
 
-window.novaOpenModal = function(title, content) {
-    NOVA.openModal(title, content);
-};
+        NOVA.scrollTo(
+            selector
+        );
+    };
 
-window.novaCloseModal = function() {
-    NOVA.closeModal();
-};
+window.novaOpenModal =
+    function(title, content) {
+
+        NOVA.openModal(
+            title,
+            content
+        );
+    };
+
+window.novaCloseModal =
+    function() {
+
+        NOVA.closeModal();
+    };
 
 /* =========================================================
    INITIALIZATION

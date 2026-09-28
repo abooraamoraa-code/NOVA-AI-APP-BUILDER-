@@ -1,1298 +1,1467 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+  <title>NOVA AI — منشئ التطبيقات بالذكاء الاصطناعي</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+  <meta
+    name="description"
+    content="NOVA AI منصة ذكية لإنشاء التطبيقات والمواقع من وصف مكتوب."
+  >
 
-    <title>
-        NOVA AI — ابنِ تطبيقك بالذكاء الاصطناعي
-    </title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <meta
-        name="description"
-        content="NOVA منصة ذكية لبناء التطبيقات والمشاريع باستخدام الذكاء الاصطناعي."
-    >
+    :root {
+      --bg: #070b14;
+      --bg2: #0d1322;
+      --card: rgba(18, 25, 42, 0.82);
+      --card2: rgba(25, 34, 56, 0.9);
+      --border: rgba(255,255,255,0.09);
+      --text: #f7f9ff;
+      --muted: #9da8bd;
+      --primary: #7c5cff;
+      --primary2: #4d8dff;
+      --success: #25d98f;
+      --danger: #ff5d73;
+      --shadow: 0 25px 80px rgba(0,0,0,.4);
+    }
 
-    <meta
-        name="theme-color"
-        content="#ffffff"
-    >
+    body {
+      font-family:
+        "Segoe UI",
+        Tahoma,
+        Arial,
+        sans-serif;
+      background:
+        radial-gradient(
+          circle at 20% 10%,
+          rgba(124,92,255,.18),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(77,141,255,.13),
+          transparent 30%
+        ),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    button,
+    textarea,
+    input {
+      font: inherit;
+    }
 
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .nova-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 74px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(7,11,20,.78);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      width: min(1180px, 92%);
+      height: 100%;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 21px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+      box-shadow:
+        0 10px 35px rgba(124,92,255,.35);
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav a {
+      padding: 10px 14px;
+      border-radius: 10px;
+      color: var(--muted);
+      transition: .2s;
+    }
+
+    .nav a:hover {
+      color: white;
+      background: rgba(255,255,255,.06);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-btn {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: white;
+      border-radius: 10px;
+      padding: 10px 16px;
+    }
+
+    .header-btn.primary {
+      border: 0;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      width: min(1180px, 92%);
+      margin: auto;
+      padding: 85px 0 50px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid rgba(124,92,255,.3);
+      background: rgba(124,92,255,.08);
+      color: #c8bcff;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      max-width: 900px;
+      margin: auto;
+      font-size: clamp(38px, 6vw, 74px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+    }
+
+    .gradient-text {
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #a996ff,
+          #6ba1ff
+        );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 25px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.9;
+    }
+
+    /* =========================
+       BUILDER
+    ========================= */
+
+    .builder-wrapper {
+      width: min(1000px, 94%);
+      margin: 35px auto 0;
+    }
+
+    .builder {
+      position: relative;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(23,31,52,.95),
+          rgba(11,17,31,.95)
+        );
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 25px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .builder-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 8px 15px;
+    }
+
+    .builder-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #9ee8c6;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 15px var(--success);
+    }
+
+    .prompt-box {
+      position: relative;
+    }
+
+    #nova-prompt {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      background: rgba(4,8,16,.72);
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+      outline: none;
+      line-height: 1.8;
+      font-size: 16px;
+      transition: .2s;
+    }
+
+    #nova-prompt:focus {
+      border-color: rgba(124,92,255,.65);
+      box-shadow:
+        0 0 0 4px rgba(124,92,255,.08);
+    }
+
+    #nova-prompt::placeholder {
+      color: #69758c;
+    }
+
+    .prompt-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 4px 3px;
+    }
+
+    .prompt-hint {
+      color: #68758d;
+      font-size: 12px;
+    }
+
+    #generate-button {
+      min-width: 210px;
+      border: 0;
+      color: white;
+      font-weight: 800;
+      border-radius: 13px;
+      padding: 14px 22px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+      box-shadow:
+        0 12px 30px rgba(91,83,255,.24);
+      transition: .2s;
+    }
+
+    #generate-button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 16px 38px rgba(91,83,255,.34);
+    }
+
+    #generate-button:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .generate-icon {
+      margin-left: 7px;
+    }
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .features {
+      width: min(1100px, 92%);
+      margin: 80px auto;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature-card {
+      padding: 25px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      transition: .2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color:
+        rgba(124,92,255,.3);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(124,92,255,.12);
+      margin-bottom: 18px;
+      font-size: 22px;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 9px;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    /* =========================
+       HOW IT WORKS
+    ========================= */
+
+    .steps {
+      width: min(1050px, 92%);
+      margin: 80px auto;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      margin: auto auto 15px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+      font-weight: 800;
+    }
+
+    .step p {
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 100px;
+      padding: 30px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    #nova-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+    }
+
+    #nova-modal.active {
+      display: block;
+    }
+
+    .modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.72);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-container {
+      position: relative;
+      width: min(850px, 92%);
+      max-height: 88vh;
+      overflow: auto;
+      margin: 6vh auto 0;
+      background:
+        linear-gradient(
+          145deg,
+          #141c2f,
+          #0a101d
+        );
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 2;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      color: white;
+      border-radius: 10px;
+    }
+
+    #modalBody {
+      padding: 35px;
+    }
+
+    .nova-generating {
+      text-align: center;
+      padding: 35px 15px;
+    }
+
+    .nova-generating-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+      animation: pulse 1.3s infinite;
+    }
+
+    .nova-generating h2 {
+      margin-bottom: 10px;
+    }
+
+    .nova-generating p {
+      color: var(--muted);
+    }
+
+    .nova-request-preview {
+      max-width: 700px;
+      margin: 25px auto;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      color: #c8d0df;
+      line-height: 1.7;
+      background: rgba(0,0,0,.18);
+    }
+
+    .nova-loading-line {
+      height: 5px;
+      background: rgba(255,255,255,.08);
+      border-radius: 10px;
+      overflow: hidden;
+      max-width: 500px;
+      margin: 20px auto;
+    }
+
+    .nova-loading-line span {
+      display: block;
+      width: 35%;
+      height: 100%;
+      background:
+        linear-gradient(
+          90deg,
+          var(--primary),
+          var(--primary2)
+        );
+      animation: loading 1.2s infinite;
+    }
+
+    .nova-generating small {
+      color: #69758d;
+    }
+
+    .nova-result-header {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .nova-result-icon {
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(37,217,143,.1);
+      font-size: 25px;
+    }
+
+    .nova-result-header p {
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .nova-ai-info {
+      display: grid;
+      grid-template-columns:
+        repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .nova-info-item {
+      padding: 15px;
+      border-radius: 13px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.025);
+    }
+
+    .nova-info-item strong {
+      display: block;
+      font-size: 11px;
+      color: #748198;
+      margin-bottom: 6px;
+    }
+
+    .nova-info-item span {
+      font-size: 13px;
+    }
+
+    .nova-section-title {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .nova-request-box,
+    .nova-response-box,
+    .nova-error-details {
+      background: rgba(0,0,0,.25);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 16px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .nova-response-box {
+      max-height: 430px;
+      overflow: auto;
+      white-space: pre-wrap;
+      direction: rtl;
+      text-align: right;
+      color: #dce4f4;
+      font-family:
+        "Segoe UI",
+        Tahoma,
+        Arial,
+        sans-serif;
+    }
+
+    .nova-result-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+
+    .nova-copy-button,
+    .nova-close-button {
+      border: 0;
+      border-radius: 11px;
+      padding: 12px 18px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary2)
+        );
+    }
+
+    .nova-close-button {
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--border);
+    }
+
+    .nova-ai-error {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .nova-error-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .nova-ai-error p {
+      color: var(--muted);
+      margin: 10px 0 20px;
+    }
+
+    .nova-error-details {
+      color: #ff9dac;
+      text-align: right;
+      overflow: auto;
+      margin-bottom: 20px;
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    #nova-toast {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      z-index: 2000;
+      min-width: 250px;
+      max-width: 380px;
+      padding: 14px 18px;
+      border-radius: 13px;
+      background: #171f32;
+      border: 1px solid var(--border);
+      color: white;
+      box-shadow: var(--shadow);
+      transform: translateY(30px);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+    }
+
+    #nova-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    #nova-toast.success {
+      border-color:
+        rgba(37,217,143,.4);
+    }
+
+    #nova-toast.error {
+      border-color:
+        rgba(255,93,115,.4);
+    }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+    @keyframes pulse {
+      0%,100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.12);
+        opacity: .65;
+      }
+    }
+
+    @keyframes loading {
+      0% {
+        transform: translateX(300%);
+      }
+
+      100% {
+        transform: translateX(-300%);
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav {
+        display: none;
+      }
+
+      .header-actions .header-btn:first-child {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 55px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+      }
+
+      .feature-grid,
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nova-ai-info {
+        grid-template-columns: 1fr;
+      }
+
+      .prompt-bottom {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      #generate-button {
+        width: 100%;
+      }
+
+      .prompt-hint {
+        text-align: center;
+      }
+
+      #modalBody {
+        padding: 25px 18px;
+      }
+
+    }
+
+  </style>
 </head>
-
 
 <body>
 
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
+  <header class="nova-header">
 
-<header class="nova-header">
+    <div class="header-inner">
 
-    <div class="header-container">
+      <a
+        href="#"
+        class="brand"
+      >
+
+        <div class="brand-logo">
+          ✦
+        </div>
+
+        <div>
+          NOVA AI
+          <small>
+            APP BUILDER
+          </small>
+        </div>
+
+      </a>
 
 
-        <a
-            href="index.html"
-            class="nova-logo"
-        >
+      <nav class="nav">
 
-            <span class="logo-icon">
-                N
-            </span>
-
-            <span class="logo-text">
-                NOVA
-            </span>
-
+        <a href="#builder">
+          المنشئ
         </a>
 
+        <a href="#features">
+          المميزات
+        </a>
 
-        <nav
-            class="nova-nav"
-            id="novaNav"
-        >
+        <a href="#how">
+          كيف يعمل؟
+        </a>
 
-            <a href="#home">
-                الرئيسية
-            </a>
-
-            <a href="#features">
-                المميزات
-            </a>
-
-            <a href="#how">
-                كيف تعمل؟
-            </a>
-
-            <a href="#technology">
-                التقنيات
-            </a>
-
-            <a href="#support">
-                الدعم
-            </a>
+      </nav>
 
 
-            <a
-                href="login.html"
-                class="nav-login"
-                id="loginNavLink"
-            >
-                تسجيل الدخول
-            </a>
-
-        </nav>
-
+      <div class="header-actions">
 
         <button
-            class="mobile-menu-button"
-            id="mobile-menu-button"
-            type="button"
-            aria-label="فتح القائمة"
+          class="header-btn"
+          type="button"
+          onclick="showToast('قسم المشاريع قيد التطوير', 'info')"
         >
-            ☰
+          مشاريعي
         </button>
 
+        <button
+          class="header-btn primary"
+          type="button"
+          onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})"
+        >
+          ابدأ الآن
+        </button>
+
+      </div>
 
     </div>
 
-</header>
+  </header>
 
 
+  <!-- =========================
+       HERO
+  ========================== -->
 
-<!-- =====================================================
-     MAIN
-===================================================== -->
+  <main>
 
-<main>
+    <section class="hero">
 
-
-<!-- =====================================================
-     HERO
-===================================================== -->
-
-<section
-    class="hero-section"
-    id="home"
->
-
-    <div class="hero-container">
+      <div class="hero-badge">
+        <span>✦</span>
+        <span>الجيل الجديد من بناء التطبيقات</span>
+      </div>
 
 
-        <div class="hero-badge">
+      <h1>
+
+        حوّل فكرتك إلى
+        <span class="gradient-text">
+          تطبيق حقيقي
+        </span>
+
+      </h1>
+
+
+      <p>
+
+        اكتب ما تريد بناءه باللغة الطبيعية،
+        ودع NOVA تحلل فكرتك وتخطط للمشروع
+        وتستخدم الذكاء الاصطناعي لإنشاء الحل البرمجي.
+
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         BUILDER
+    ========================== -->
+
+    <section
+      id="builder"
+      class="builder-wrapper"
+    >
+
+      <div class="builder">
+
+        <div class="builder-top">
+
+          <div class="builder-title">
+
+            <span>🚀</span>
 
             <span>
-                ✦
+              أنشئ مشروعك
             </span>
 
-            منصة بناء التطبيقات بالذكاء الاصطناعي
+          </div>
+
+
+          <div class="status">
+
+            <span class="status-dot"></span>
+
+            <span>
+              NOVA متصلة
+            </span>
+
+          </div>
 
         </div>
 
 
+        <form
+          id="nova-builder-form"
+        >
 
-        <h1 class="hero-title">
+          <div class="prompt-box">
 
-            حوّل فكرتك إلى
+            <textarea
+              id="nova-prompt"
+              maxlength="10000"
+              placeholder="مثال: اعمل لي تطبيق متجر ملابس احترافي يحتوي على المنتجات والأسعار والبحث وسلة المشتريات وتسجيل الدخول..."
+            ></textarea>
 
-            <span>
-                تطبيق حقيقي
-            </span>
-
-        </h1>
+          </div>
 
 
+          <div class="prompt-bottom">
 
-        <p class="hero-description">
+            <div class="prompt-hint">
 
-            اكتب ما تريد بناءه باللغة الطبيعية،
-            ودع NOVA تساعدك في إنشاء مشروعك وتنظيم ملفاته
-            وتطويره خطوة بخطوة.
+              Ctrl + Enter للإرسال
 
+            </div>
+
+
+            <button
+              id="generate-button"
+              type="submit"
+            >
+
+              <span class="generate-icon">
+                🚀
+              </span>
+
+              <span>
+                إنشاء المشروع
+              </span>
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURES
+    ========================== -->
+
+    <section
+      id="features"
+      class="features"
+    >
+
+      <div class="section-heading">
+
+        <h2>
+          محرك واحد لمشروعك
+        </h2>
+
+        <p>
+          NOVA مصممة لتكبر مع مشروعك.
         </p>
 
+      </div>
 
 
-        <!-- =================================================
-             AI BUILDER
-        ================================================= -->
+      <div class="feature-grid">
 
-        <div class="ai-builder-box">
+        <article class="feature-card">
 
+          <div class="feature-icon">
+            🧠
+          </div>
 
-            <div class="ai-box-header">
+          <h3>
+            تحليل ذكي
+          </h3>
 
+          <p>
+            تحليل طلبك واكتشاف نوع المشروع
+            والتقنيات والميزات المطلوبة.
+          </p>
 
-                <div class="ai-status">
-
-                    <span class="status-dot"></span>
-
-                    <span>
-                        NOVA AI متصل
-                    </span>
-
-                </div>
-
-
-                <span class="ai-version">
-                    AI BUILDER
-                </span>
+        </article>
 
 
-            </div>
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            ⚡
+          </div>
+
+          <h3>
+            توليد سريع
+          </h3>
+
+          <p>
+            تحويل وصف المشروع إلى خطة
+            ومخرجات برمجية منظمة.
+          </p>
+
+        </article>
 
 
+        <article class="feature-card">
 
-            <div class="prompt-area">
+          <div class="feature-icon">
+            🔐
+          </div>
 
+          <h3>
+            أمان المفاتيح
+          </h3>
 
-                <textarea
-                    id="nova-prompt"
-                    class="nova-prompt"
-                    maxlength="5000"
-                    placeholder="اكتب فكرة التطبيق الذي تريد بناءه...
+          <p>
+            مفاتيح مزودي الذكاء الاصطناعي
+            لا توضع داخل واجهة المستخدم.
+          </p>
 
-مثال:
-اعمل لي تطبيق متجر ملابس يحتوي على تسجيل الدخول والمنتجات والسلة وحساب المستخدم."
-                ></textarea>
-
-
-            </div>
-
-
-
-            <div class="prompt-footer">
+        </article>
 
 
-                <div class="prompt-info">
+        <article class="feature-card">
 
-                    <span id="promptCounter">
-                        0 / 5000
-                    </span>
+          <div class="feature-icon">
+            🔄
+          </div>
 
-                </div>
+          <h3>
+            تعدد المزودين
+          </h3>
 
+          <p>
+            تصميم المحرك يسمح بإضافة أكثر
+            من مزود ذكاء اصطناعي.
+          </p>
 
-
-                <button
-                    id="generate-button"
-                    class="generate-button"
-                    type="button"
-                >
-
-                    <span class="generate-icon">
-                        ✨
-                    </span>
-
-                    <span>
-                        ابدأ بناء التطبيق
-                    </span>
-
-                </button>
+        </article>
 
 
-            </div>
+        <article class="feature-card">
 
+          <div class="feature-icon">
+            🛠️
+          </div>
+
+          <h3>
+            فحص المشروع
+          </h3>
+
+          <p>
+            التحقق من نتيجة الذكاء الاصطناعي
+            قبل عرضها للمستخدم.
+          </p>
+
+        </article>
+
+
+        <article class="feature-card">
+
+          <div class="feature-icon">
+            📦
+          </div>
+
+          <h3>
+            مشاريع منظمة
+          </h3>
+
+          <p>
+            تصميم المحرك يدعم إنشاء مشاريع
+            متعددة الملفات والمراحل.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================== -->
+
+    <section
+      id="how"
+      class="steps"
+    >
+
+      <div class="section-heading">
+
+        <h2>
+          كيف تعمل NOVA؟
+        </h2>
+
+        <p>
+          أربع مراحل أساسية لبناء المشروع.
+        </p>
+
+      </div>
+
+
+      <div class="steps-grid">
+
+        <div class="step">
+
+          <div class="step-number">
+            1
+          </div>
+
+          <h3>
+            اكتب الفكرة
+          </h3>
+
+          <p>
+            اشرح التطبيق الذي تريد بناءه.
+          </p>
 
         </div>
 
 
+        <div class="step">
 
-        <!-- =================================================
-             QUICK IDEAS
-        ================================================= -->
+          <div class="step-number">
+            2
+          </div>
 
-        <div class="quick-ideas">
+          <h3>
+            التحليل
+          </h3>
 
-
-            <span class="quick-title">
-                جرّب فكرة:
-            </span>
-
-
-
-            <button
-                type="button"
-                class="idea-button"
-                data-prompt="اعمل لي متجر إلكتروني احترافي لبيع الملابس يحتوي على المنتجات والسلة وتسجيل الدخول وحساب المستخدم."
-            >
-                🛍️ متجر إلكتروني
-            </button>
-
-
-
-            <button
-                type="button"
-                class="idea-button"
-                data-prompt="اعمل لي تطبيق لإدارة المهام اليومية مع إضافة المهام وتعديلها وحذفها والبحث بينها."
-            >
-                ✅ إدارة المهام
-            </button>
-
-
-
-            <button
-                type="button"
-                class="idea-button"
-                data-prompt="اعمل لي موقع شركة احترافي يحتوي على الرئيسية والخدمات والأسعار ومن نحن والتواصل معنا."
-            >
-                🏢 موقع شركة
-            </button>
-
+          <p>
+            NOVA تحدد نوع المشروع
+            والميزات والتقنيات.
+          </p>
 
         </div>
 
 
-    </div>
+        <div class="step">
 
-</section>
+          <div class="step-number">
+            3
+          </div>
 
+          <h3>
+            الذكاء الاصطناعي
+          </h3>
 
-
-<!-- =====================================================
-     TECHNOLOGY
-===================================================== -->
-
-<section
-    class="technologies-section"
-    id="technology"
->
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-label">
-                TECHNOLOGY
-            </span>
-
-
-            <h2>
-                تقنيات حديثة لبناء مشاريعك
-            </h2>
-
-
-            <p>
-                NOVA مصممة لتجمع الأدوات التي يحتاجها
-                مشروع التطبيق الحديث في مكان واحد.
-            </p>
+          <p>
+            يتم إرسال خطة منظمة إلى
+            مزود الذكاء الاصطناعي.
+          </p>
 
         </div>
 
 
+        <div class="step">
 
-        <div class="technology-grid">
+          <div class="step-number">
+            4
+          </div>
 
+          <h3>
+            النتيجة
+          </h3>
 
-            <div class="technology-card">
-
-                <div class="technology-icon">
-                    G
-                </div>
-
-                <h3>
-                    Google AI
-                </h3>
-
-                <p>
-                    استخدام تقنيات الذكاء الاصطناعي
-                    لبناء وتجهيز المشاريع.
-                </p>
-
-            </div>
-
-
-
-            <div class="technology-card">
-
-                <div class="technology-icon">
-                    S
-                </div>
-
-                <h3>
-                    Supabase
-                </h3>
-
-                <p>
-                    قاعدة البيانات والمصادقة والتخزين
-                    والوظائف الخلفية.
-                </p>
-
-            </div>
-
-
-
-            <div class="technology-card">
-
-                <div class="technology-icon">
-                    GH
-                </div>
-
-                <h3>
-                    GitHub
-                </h3>
-
-                <p>
-                    إدارة الملفات والكود
-                    والمشاريع البرمجية.
-                </p>
-
-            </div>
-
-
-
-            <div class="technology-card">
-
-                <div class="technology-icon">
-                    JS
-                </div>
-
-                <h3>
-                    JavaScript
-                </h3>
-
-                <p>
-                    بناء الواجهات والتفاعل
-                    مع وظائف التطبيق.
-                </p>
-
-            </div>
-
-
-
-            <div class="technology-card">
-
-                <div class="technology-icon">
-                    AI
-                </div>
-
-                <h3>
-                    AI Providers
-                </h3>
-
-                <p>
-                    إمكانية دعم أكثر من مزود
-                    للذكاء الاصطناعي.
-                </p>
-
-            </div>
-
+          <p>
+            يتم عرض نتيجة الذكاء الاصطناعي
+            داخل NOVA.
+          </p>
 
         </div>
 
-    </div>
+      </div>
 
-</section>
+    </section>
 
+  </main>
 
 
-<!-- =====================================================
-     FEATURES
-===================================================== -->
+  <!-- =========================
+       FOOTER
+  ========================== -->
 
-<section
-    class="features-section"
-    id="features"
->
+  <footer>
 
-    <div class="section-container">
+    ©
+    <span id="currentYear"></span>
+    NOVA AI.
+    جميع الحقوق محفوظة.
 
+  </footer>
 
-        <div class="section-heading">
 
-            <span class="section-label">
-                FEATURES
-            </span>
+  <!-- =========================
+       MODAL
+  ========================== -->
 
-
-            <h2>
-                كل أدوات مشروعك في مكان واحد
-            </h2>
-
-
-            <p>
-                NOVA تجمع مجموعة من الأدوات لمساعدتك
-                على إنشاء وإدارة وتطوير مشاريعك.
-            </p>
-
-        </div>
-
-
-
-        <div class="features-grid">
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ✨
-                </div>
-
-                <h3>
-                    AI Builder
-                </h3>
-
-                <p>
-                    اكتب فكرتك باللغة الطبيعية
-                    وابدأ بناء مشروعك.
-                </p>
-
-            </div>
-
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🔐
-                </div>
-
-                <h3>
-                    حسابات المستخدمين
-                </h3>
-
-                <p>
-                    نظام تسجيل دخول وحسابات
-                    للمستخدمين.
-                </p>
-
-            </div>
-
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    📁
-                </div>
-
-                <h3>
-                    إدارة المشاريع
-                </h3>
-
-                <p>
-                    أنشئ مشاريعك واحفظها
-                    وأدر معلوماتها.
-                </p>
-
-            </div>
-
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    💻
-                </div>
-
-                <h3>
-                    ملفات المشروع
-                </h3>
-
-                <p>
-                    إنشاء وتنظيم ملفات المشروع
-                    بطريقة واضحة.
-                </p>
-
-            </div>
-
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    👁️
-                </div>
-
-                <h3>
-                    المعاينة
-                </h3>
-
-                <p>
-                    إمكانية مشاهدة المشروع
-                    أثناء تطويره.
-                </p>
-
-            </div>
-
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    ☁️
-                </div>
-
-                <h3>
-                    التخزين السحابي
-                </h3>
-
-                <p>
-                    حفظ موارد وملفات المشروع
-                    في التخزين السحابي.
-                </p>
-
-            </div>
-
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🛠️
-                </div>
-
-                <h3>
-                    لوحة الإدارة
-                </h3>
-
-                <p>
-                    أدوات خاصة لإدارة
-                    المنصة والمستخدمين.
-                </p>
-
-            </div>
-
-
-
-            <div class="feature-card">
-
-                <div class="feature-icon">
-                    🐙
-                </div>
-
-                <h3>
-                    GitHub
-                </h3>
-
-                <p>
-                    تنظيم المشاريع وإمكانية
-                    تصدير الكود.
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     HOW IT WORKS
-===================================================== -->
-
-<section
-    class="how-section"
-    id="how"
->
-
-    <div class="section-container">
-
-
-        <div class="section-heading">
-
-            <span class="section-label">
-                HOW IT WORKS
-            </span>
-
-
-            <h2>
-                كيف تعمل NOVA؟
-            </h2>
-
-
-            <p>
-                أربع خطوات بسيطة للبدء في بناء فكرتك.
-            </p>
-
-        </div>
-
-
-
-        <div class="steps-grid">
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    01
-                </div>
-
-                <div class="step-content">
-
-                    <h3>
-                        اكتب فكرتك
-                    </h3>
-
-                    <p>
-                        أخبر NOVA بالتطبيق أو الموقع
-                        الذي تريد إنشاءه.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    02
-                </div>
-
-                <div class="step-content">
-
-                    <h3>
-                        تحليل الطلب
-                    </h3>
-
-                    <p>
-                        يتم تجهيز طلبك وإرساله
-                        إلى نظام الذكاء الاصطناعي.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    03
-                </div>
-
-                <div class="step-content">
-
-                    <h3>
-                        إنشاء المشروع
-                    </h3>
-
-                    <p>
-                        يتم تجهيز هيكل المشروع
-                        وملفاته حسب الطلب.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="step-card">
-
-                <div class="step-number">
-                    04
-                </div>
-
-                <div class="step-content">
-
-                    <h3>
-                        التطوير والمعاينة
-                    </h3>
-
-                    <p>
-                        افتح المشروع وواصل تطويره
-                        وإدارته.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     SUPPORT
-===================================================== -->
-
-<section
-    class="support-section"
-    id="support"
->
-
-    <div class="section-container">
-
-
-        <div class="support-card">
-
-
-            <div class="support-content">
-
-
-                <span class="section-label">
-                    SUPPORT
-                </span>
-
-
-                <h2>
-                    هل تحتاج إلى مساعدة؟
-                </h2>
-
-
-                <p>
-                    إذا واجهت مشكلة أو لديك سؤال،
-                    يمكنك التواصل مع فريق الدعم.
-                </p>
-
-
-                <button
-                    type="button"
-                    class="support-button"
-                    id="supportButton"
-                >
-                    💬 تواصل مع الدعم
-                </button>
-
-
-            </div>
-
-
-
-            <div class="support-icon">
-                💬
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-</main>
-
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="nova-footer">
-
-    <div class="footer-container">
-
-
-        <div class="footer-brand">
-
-
-            <a
-                href="index.html"
-                class="nova-logo"
-            >
-
-                <span class="logo-icon">
-                    N
-                </span>
-
-                <span class="logo-text">
-                    NOVA
-                </span>
-
-            </a>
-
-
-            <p>
-                منصة ذكية لبناء التطبيقات والمشاريع
-                باستخدام الذكاء الاصطناعي.
-            </p>
-
-
-        </div>
-
-
-
-        <div class="footer-links">
-
-
-            <a href="#home">
-                الرئيسية
-            </a>
-
-
-            <a href="#features">
-                المميزات
-            </a>
-
-
-            <a href="#how">
-                كيف تعمل؟
-            </a>
-
-
-            <a href="#technology">
-                التقنيات
-            </a>
-
-
-            <a href="#support">
-                الدعم
-            </a>
-
-
-        </div>
-
-
-
-        <div class="footer-copy">
-
-            ©
-
-            <span id="currentYear"></span>
-
-            NOVA —
-
-            جميع الحقوق محفوظة.
-
-        </div>
-
-
-    </div>
-
-</footer>
-
-
-
-<!-- =====================================================
-     MODAL
-===================================================== -->
-
-<div
-    class="nova-modal"
+  <div
     id="nova-modal"
     aria-hidden="true"
->
-
+  >
 
     <div class="modal-overlay"></div>
 
+    <div class="modal-container">
 
-    <div
-        class="modal-box"
-        role="dialog"
-        aria-modal="true"
-    >
+      <button
+        class="modal-close"
+        type="button"
+        aria-label="إغلاق"
+      >
+        ✕
+      </button>
 
-
-        <button
-            class="modal-close"
-            id="modalClose"
-            type="button"
-            aria-label="إغلاق"
-        >
-            ×
-        </button>
-
-
-        <div
-            class="modal-icon"
-            id="modalIcon"
-        >
-            ✨
-        </div>
-
-
-        <h2 id="modalTitle">
-            NOVA
-        </h2>
-
-
-        <div id="modalBody">
-
-            أهلاً بك في NOVA.
-
-        </div>
-
+      <div id="modalBody"></div>
 
     </div>
 
-</div>
+  </div>
 
 
+  <!-- =========================
+       TOAST
+  ========================== -->
 
-<!-- =====================================================
-     TOAST
-===================================================== -->
+  <div id="nova-toast"></div>
 
-<div
-    class="nova-toast"
-    id="nova-toast"
-    aria-live="polite"
->
 
-    <span id="toastMessage"></span>
+  <!-- =========================
+       SCRIPTS
+  ========================== -->
 
-</div>
+  <script>
 
+    /*
+    ------------------------------------------------------
+    تحميل محرك NOVA
+    ------------------------------------------------------
+    */
 
+    const novaEngineScript =
+      document.createElement("script");
 
-<!-- =====================================================
-     SCRIPTS
-===================================================== -->
+    novaEngineScript.src =
+      "nova-engine.js";
 
-<script src="config.js"></script>
+    novaEngineScript.onload =
+      function () {
 
-<script src="supabase.js"></script>
-
-<script src="auth.js"></script>
-
-<script src="app.js"></script>
-
-
-
-<!-- =====================================================
-     BASIC PAGE LOGIC
-===================================================== -->
-
-<script>
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-
-        /* =========================
-           ELEMENTS
-        ========================= */
-
-        const prompt =
-            document.getElementById(
-                "nova-prompt"
-            );
-
-
-        const counter =
-            document.getElementById(
-                "promptCounter"
-            );
-
-
-        const ideas =
-            document.querySelectorAll(
-                ".idea-button"
-            );
-
-
-        const currentYear =
-            document.getElementById(
-                "currentYear"
-            );
-
-
-        const mobileButton =
-            document.getElementById(
-                "mobile-menu-button"
-            );
-
-
-        const nav =
-            document.getElementById(
-                "novaNav"
-            );
-
-
-
-        /* =========================
-           YEAR
-        ========================= */
-
-        if (currentYear) {
-
-            currentYear.textContent =
-                new Date().getFullYear();
-
-        }
-
-
-
-        /* =========================
-           PROMPT COUNTER
-        ========================= */
-
-        function updateCounter() {
-
-
-            if (
-                !prompt ||
-                !counter
-            ) {
-
-                return;
-
-            }
-
-
-            counter.textContent =
-                prompt.value.length +
-                " / 5000";
-
-
-        }
-
-
-
-        if (prompt) {
-
-
-            prompt.addEventListener(
-                "input",
-                updateCounter
-            );
-
-
-            updateCounter();
-
-
-        }
-
-
-
-        /* =========================
-           QUICK IDEAS
-        ========================= */
-
-        ideas.forEach(
-            function (button) {
-
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-
-                        if (!prompt) {
-
-                            return;
-
-                        }
-
-
-                        const text =
-                            button.getAttribute(
-                                "data-prompt"
-                            );
-
-
-                        if (text) {
-
-
-                            prompt.value =
-                                text;
-
-
-                            updateCounter();
-
-
-                            prompt.focus();
-
-
-                        }
-
-
-                    }
-                );
-
-
-            }
+        console.log(
+          "NOVA Engine loaded."
         );
 
+        const providerScript =
+          document.createElement(
+            "script"
+          );
 
+        providerScript.src =
+          "nova-gemini-provider.js";
 
-        /* =========================
-           MOBILE MENU
-        ========================= */
+        providerScript.onload =
+          function () {
 
-        if (
-            mobileButton &&
-            nav
-        ) {
-
-
-            mobileButton.addEventListener(
-                "click",
-                function () {
-
-
-                    nav.classList.toggle(
-                        "mobile-open"
-                    );
-
-
-                }
+            console.log(
+              "NOVA Gemini Provider loaded."
             );
 
+          };
+
+        providerScript.onerror =
+          function () {
+
+            console.error(
+              "تعذر تحميل nova-gemini-provider.js"
+            );
+
+          };
+
+        document.head.appendChild(
+          providerScript
+        );
+
+      };
 
 
-            nav
-                .querySelectorAll("a")
-                .forEach(
-                    function (link) {
+    novaEngineScript.onerror =
+      function () {
+
+        console.error(
+          "تعذر تحميل nova-engine.js"
+        );
+
+      };
 
 
-                        link.addEventListener(
-                            "click",
-                            function () {
+    document.head.appendChild(
+      novaEngineScript
+    );
+
+  </script>
 
 
-                                nav.classList.remove(
-                                    "mobile-open"
-                                );
+  <!-- =========================
+       NOVA APP
+  ========================== -->
+
+  <script src="app.js"></script>
 
 
-                            }
-                        );
+  <script>
 
+    /*
+    ------------------------------------------------------
+    السنة الحالية
+    ------------------------------------------------------
+    */
 
-                    }
-                );
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
 
+        const year =
+          document.getElementById(
+            "currentYear"
+          );
+
+        if (year) {
+
+          year.textContent =
+            new Date().getFullYear();
 
         }
 
+      }
+    );
 
 
-        /* =========================
-           SMOOTH SCROLL
-        ========================= */
+    /*
+    ------------------------------------------------------
+    زر النسخ
+    ------------------------------------------------------
+    */
 
-        document
-            .querySelectorAll(
-                'a[href^="#"]'
-            )
-            .forEach(
-                function (link) {
+    window.copyAIResult =
+      async function () {
 
+        const result =
+          window.NOVA_LAST_RESULT || "";
 
-                    link.addEventListener(
-                        "click",
-                        function (event) {
+        if (!result) {
 
+          showToast(
+            "لا يوجد رد لنسخه.",
+            "error"
+          );
 
-                            const targetId =
-                                link.getAttribute(
-                                    "href"
-                                );
+          return;
 
+        }
 
-                            if (
-                                !targetId ||
-                                targetId === "#"
-                            ) {
+        try {
 
-                                return;
+          await navigator.clipboard
+            .writeText(result);
 
-                            }
+          showToast(
+            "تم نسخ الرد بنجاح ✅",
+            "success"
+          );
 
+        } catch (error) {
 
-                            const target =
-                                document.querySelector(
-                                    targetId
-                                );
+          showToast(
+            "تعذر نسخ الرد.",
+            "error"
+          );
 
+        }
 
-                            if (!target) {
+      };
 
-                                return;
-
-                            }
-
-
-                            event.preventDefault();
-
-
-                            target.scrollIntoView(
-                                {
-                                    behavior:
-                                        "smooth",
-
-                                    block:
-                                        "start"
-                                }
-                            );
-
-
-                        }
-                    );
-
-
-                }
-            );
-
-
-    }
-);
-
-</script>
-
+  </script>
 
 </body>
-
 </html>
+```

@@ -1,863 +1,819 @@
+// ============================================================
+// NOVA AI APP BUILDER
+// app.js - Version 2.1.0
+// ============================================================
+
 "use strict";
 
-/* =========================================================
-   NOVA APP BUILDER — REAL AI FRONTEND ENGINE
-   ========================================================= */
+// ============================================================
+// إعدادات NOVA
+// ============================================================
 
-const NOVA = {
-    version: "2.0.0",
+const NOVA_CONFIG = {
+  version: "2.1.0",
 
-    state: {
-        mobileMenu: false,
-        modal: false,
-        generating: false,
-        currentPrompt: "",
-        user: null,
-        lastAIResult: null
-    },
+  aiEndpoint:
+    "https://cjveqwqxfvtenarybbvj.supabase.co/functions/v1/quick-responder",
 
-    elements: {},
-    toastTimer: null,
+  requestTimeout: 120000,
 
-    /* =====================================================
-       INIT
-       ===================================================== */
-
-    init() {
-        this.cacheElements();
-        this.bindEvents();
-        this.updateYear();
-        this.loadSavedData();
-
-        console.log("NOVA initialized:", this.version);
-    },
-
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
-
-    cacheElements() {
-
-        this.elements.prompt =
-            document.querySelector("#novaPrompt");
-
-        this.elements.generateButton =
-            document.querySelector("#generateButton");
-
-        this.elements.modal =
-            document.querySelector("#novaModal");
-
-        this.elements.modalClose =
-            document.querySelector("#modalClose");
-
-        this.elements.mobileButton =
-            document.querySelector("#mobileMenuButton");
-
-        this.elements.mobileMenu =
-            document.querySelector("#mobileMenu");
-
-        this.elements.toast =
-            document.querySelector("#novaToast");
-
-        this.elements.year =
-            document.querySelector("#novaYear");
-    },
-
-    /* =====================================================
-       EVENTS
-       ===================================================== */
-
-    bindEvents() {
-
-        if (this.elements.generateButton) {
-
-            this.elements.generateButton.addEventListener(
-                "click",
-                () => this.generateProject()
-            );
-        }
-
-        if (this.elements.modalClose) {
-
-            this.elements.modalClose.addEventListener(
-                "click",
-                () => this.closeModal()
-            );
-        }
-
-        if (this.elements.modal) {
-
-            this.elements.modal.addEventListener(
-                "click",
-                (event) => {
-
-                    if (
-                        event.target ===
-                        this.elements.modal
-                    ) {
-                        this.closeModal();
-                    }
-                }
-            );
-        }
-
-        if (this.elements.mobileButton) {
-
-            this.elements.mobileButton.addEventListener(
-                "click",
-                () => this.toggleMobileMenu()
-            );
-        }
-
-        document.addEventListener(
-            "keydown",
-            (event) => {
-
-                if (event.key === "Escape") {
-
-                    this.closeModal();
-                    this.closeMobileMenu();
-                }
-
-                if (
-                    event.ctrlKey &&
-                    event.key.toLowerCase() === "enter"
-                ) {
-
-                    this.generateProject();
-                }
-            }
-        );
-    },
-
-    /* =====================================================
-       REAL AI REQUEST
-       ===================================================== */
-
-    async generateProject() {
-
-        if (this.state.generating) {
-            return;
-        }
-
-        const prompt =
-            this.elements.prompt
-                ? this.elements.prompt.value.trim()
-                : "";
-
-        if (!prompt) {
-
-            this.showToast(
-                "اكتب وصف التطبيق أولاً."
-            );
-
-            if (this.elements.prompt) {
-                this.elements.prompt.focus();
-            }
-
-            return;
-        }
-
-        if (prompt.length < 10) {
-
-            this.showToast(
-                "اكتب وصفًا أطول قليلًا حتى تفهم NOVA المطلوب."
-            );
-
-            return;
-        }
-
-        this.state.currentPrompt = prompt;
-        this.state.generating = true;
-
-        this.setGenerateLoading(true);
-        this.savePrompt(prompt);
-
-        this.openModal(
-            "NOVA تعمل الآن",
-            `
-                <div style="
-                    text-align:center;
-                    padding:20px 5px;
-                ">
-
-                    <div class="nova-loading"
-                         style="
-                            width:32px;
-                            height:32px;
-                            margin:0 auto 18px;
-                         ">
-                    </div>
-
-                    <h3 style="
-                        margin:0 0 10px;
-                    ">
-                        جارٍ الاتصال بالذكاء الاصطناعي...
-                    </h3>
-
-                    <p style="
-                        margin:0;
-                        color:#667085;
-                    ">
-                        NOVA ترسل طلبك إلى محرك Gemini.
-                    </p>
-
-                    <div style="
-                        margin-top:18px;
-                        padding:14px;
-                        background:#f8fafc;
-                        border:1px solid #e5e7eb;
-                        border-radius:12px;
-                        text-align:right;
-                        white-space:pre-wrap;
-                        word-break:break-word;
-                    ">
-                        ${this.escapeHTML(prompt)}
-                    </div>
-
-                </div>
-            `
-        );
-
-        try {
-
-            const result =
-                await this.callNOVAAI(prompt);
-
-            this.state.lastAIResult = result;
-
-            this.setGenerateLoading(false);
-            this.state.generating = false;
-
-            this.showAIResult(result);
-
-        } catch (error) {
-
-            console.error(
-                "NOVA AI ERROR:",
-                error
-            );
-
-            this.setGenerateLoading(false);
-            this.state.generating = false;
-
-            this.showAIError(error);
-        }
-    },
-
-    /* =====================================================
-       CALL SUPABASE EDGE FUNCTION
-       ===================================================== */
-
-    async callNOVAAI(prompt) {
-
-        const endpoint =
-            "https://cjveqwqxfvtenarybbvj.supabase.co/functions/v1/nova-ai";
-
-        const response =
-            await fetch(
-                endpoint,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        prompt: prompt
-                    })
-                }
-            );
-
-        let data = null;
-
-        try {
-
-            data =
-                await response.json();
-
-        } catch (error) {
-
-            throw new Error(
-                "لم يتمكن الموقع من قراءة رد الخادم."
-            );
-        }
-
-        if (!response.ok) {
-
-            throw new Error(
-                data?.error ||
-                data?.details ||
-                `خطأ من الخادم: ${response.status}`
-            );
-        }
-
-        if (!data || data.success !== true) {
-
-            throw new Error(
-                data?.error ||
-                "لم يرجع الذكاء الاصطناعي نتيجة صحيحة."
-            );
-        }
-
-        if (!data.result) {
-
-            throw new Error(
-                "وصل الرد ولكن بدون محتوى."
-            );
-        }
-
-        return data;
-    },
-
-    /* =====================================================
-       DISPLAY AI RESULT
-       ===================================================== */
-
-    showAIResult(data) {
-
-        const result =
-            String(data.result || "");
-
-        const provider =
-            data.provider ||
-            "gemini";
-
-        const model =
-            data.model ||
-            "AI";
-
-        const keyNumber =
-            data.keyNumber
-                ? `المفتاح المستخدم: ${data.keyNumber}`
-                : "";
-
-        const formattedResult =
-            this.formatAIText(result);
-
-        this.openModal(
-            "تم استلام رد NOVA 🤖",
-            `
-                <div style="
-                    margin-bottom:16px;
-                    padding:12px 14px;
-                    background:#f0fdf4;
-                    border:1px solid #bbf7d0;
-                    border-radius:12px;
-                    color:#166534;
-                ">
-                    <strong>اتصال ناجح بالذكاء الاصطناعي</strong>
-                    <div style="
-                        margin-top:5px;
-                        font-size:13px;
-                    ">
-                        Provider: ${this.escapeHTML(provider)}
-                        <br>
-                        Model: ${this.escapeHTML(model)}
-                        ${
-                            keyNumber
-                                ? `<br>${this.escapeHTML(keyNumber)}`
-                                : ""
-                        }
-                    </div>
-                </div>
-
-                <div style="
-                    padding:18px;
-                    background:#f8fafc;
-                    border:1px solid #e5e7eb;
-                    border-radius:14px;
-                    line-height:1.9;
-                    color:#344054;
-                    max-height:55vh;
-                    overflow:auto;
-                    direction:rtl;
-                    text-align:right;
-                ">
-                    ${formattedResult}
-                </div>
-
-                <div style="
-                    margin-top:16px;
-                    display:flex;
-                    gap:10px;
-                    flex-wrap:wrap;
-                ">
-
-                    <button
-                        type="button"
-                        onclick="NOVA.copyAIResult()"
-                        style="
-                            border:0;
-                            padding:11px 16px;
-                            border-radius:10px;
-                            cursor:pointer;
-                            background:#111827;
-                            color:white;
-                            font-weight:600;
-                        "
-                    >
-                        نسخ الرد
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="NOVA.closeModal()"
-                        style="
-                            border:1px solid #d0d5dd;
-                            padding:11px 16px;
-                            border-radius:10px;
-                            cursor:pointer;
-                            background:white;
-                            color:#344054;
-                            font-weight:600;
-                        "
-                    >
-                        إغلاق
-                    </button>
-
-                </div>
-            `
-        );
-    },
-
-    /* =====================================================
-       AI ERROR
-       ===================================================== */
-
-    showAIError(error) {
-
-        const message =
-            error instanceof Error
-                ? error.message
-                : String(error);
-
-        this.openModal(
-            "حدث خطأ في الاتصال",
-            `
-                <div style="
-                    padding:18px;
-                    background:#fef2f2;
-                    border:1px solid #fecaca;
-                    border-radius:14px;
-                    color:#991b1b;
-                    line-height:1.8;
-                ">
-                    <strong>
-                        لم تتمكن NOVA من الحصول على رد من الذكاء الاصطناعي.
-                    </strong>
-
-                    <div style="
-                        margin-top:12px;
-                        padding:12px;
-                        background:white;
-                        border-radius:10px;
-                        border:1px solid #fee2e2;
-                        color:#7f1d1d;
-                        direction:rtl;
-                        text-align:right;
-                        word-break:break-word;
-                    ">
-                        ${this.escapeHTML(message)}
-                    </div>
-                </div>
-
-                <p style="
-                    margin-top:15px;
-                    color:#667085;
-                ">
-                    إذا ظهر هذا الخطأ، سنفحص Edge Function
-                    ونصلحه في الخطوة التالية.
-                </p>
-            `
-        );
-    },
-
-    /* =====================================================
-       FORMAT AI TEXT
-       ===================================================== */
-
-    formatAIText(text) {
-
-        let safe =
-            this.escapeHTML(text);
-
-        safe =
-            safe.replace(
-                /\*\*(.*?)\*\*/g,
-                "<strong>$1</strong>"
-            );
-
-        safe =
-            safe.replace(
-                /`([^`]+)`/g,
-                `<code style="
-                    background:#eef2ff;
-                    padding:2px 6px;
-                    border-radius:5px;
-                    direction:ltr;
-                    display:inline-block;
-                ">$1</code>`
-            );
-
-        safe =
-            safe.replace(
-                /\n/g,
-                "<br>"
-            );
-
-        return safe;
-    },
-
-    /* =====================================================
-       COPY AI RESULT
-       ===================================================== */
-
-    async copyAIResult() {
-
-        const result =
-            this.state.lastAIResult?.result;
-
-        if (!result) {
-
-            this.showToast(
-                "لا يوجد رد لنسخه."
-            );
-
-            return;
-        }
-
-        try {
-
-            await navigator.clipboard.writeText(
-                String(result)
-            );
-
-            this.showToast(
-                "تم نسخ رد NOVA."
-            );
-
-        } catch (error) {
-
-            this.showToast(
-                "تعذر النسخ من المتصفح."
-            );
-        }
-    },
-
-    /* =====================================================
-       LOADING BUTTON
-       ===================================================== */
-
-    setGenerateLoading(loading) {
-
-        if (!this.elements.generateButton) {
-            return;
-        }
-
-        if (loading) {
-
-            this.elements.generateButton.dataset
-                .originalText =
-                this.elements.generateButton.innerHTML;
-
-            this.elements.generateButton.innerHTML = `
-                <span class="nova-loading"></span>
-                جارٍ الاتصال بالذكاء الاصطناعي...
-            `;
-
-            this.elements.generateButton.disabled = true;
-
-        } else {
-
-            this.elements.generateButton.innerHTML =
-                this.elements.generateButton.dataset
-                    .originalText ||
-                "ابدأ بناء التطبيق";
-
-            this.elements.generateButton.disabled =
-                false;
-        }
-    },
-
-    /* =====================================================
-       MODAL
-       ===================================================== */
-
-    openModal(title, content) {
-
-        if (!this.elements.modal) {
-            return;
-        }
-
-        const titleElement =
-            this.elements.modal.querySelector(
-                "#modalTitle"
-            );
-
-        const bodyElement =
-            this.elements.modal.querySelector(
-                "#modalBody"
-            );
-
-        if (titleElement) {
-
-            titleElement.textContent =
-                title;
-        }
-
-        if (bodyElement) {
-
-            bodyElement.innerHTML =
-                content;
-        }
-
-        this.elements.modal.classList.add(
-            "active"
-        );
-
-        this.state.modal = true;
-
-        document.body.style.overflow =
-            "hidden";
-    },
-
-    closeModal() {
-
-        if (!this.elements.modal) {
-            return;
-        }
-
-        this.elements.modal.classList.remove(
-            "active"
-        );
-
-        this.state.modal = false;
-
-        document.body.style.overflow =
-            "";
-    },
-
-    /* =====================================================
-       MOBILE MENU
-       ===================================================== */
-
-    toggleMobileMenu() {
-
-        if (!this.elements.mobileMenu) {
-            return;
-        }
-
-        this.state.mobileMenu =
-            !this.state.mobileMenu;
-
-        this.elements.mobileMenu.classList.toggle(
-            "active",
-            this.state.mobileMenu
-        );
-    },
-
-    closeMobileMenu() {
-
-        if (!this.elements.mobileMenu) {
-            return;
-        }
-
-        this.state.mobileMenu = false;
-
-        this.elements.mobileMenu.classList.remove(
-            "active"
-        );
-    },
-
-    /* =====================================================
-       TOAST
-       ===================================================== */
-
-    showToast(
-        message,
-        duration = 3500
-    ) {
-
-        if (!this.elements.toast) {
-            return;
-        }
-
-        this.elements.toast.textContent =
-            message;
-
-        this.elements.toast.classList.add(
-            "show"
-        );
-
-        clearTimeout(
-            this.toastTimer
-        );
-
-        this.toastTimer =
-            setTimeout(
-                () => {
-
-                    this.elements.toast.classList.remove(
-                        "show"
-                    );
-
-                },
-                duration
-            );
-    },
-
-    /* =====================================================
-       LOCAL STORAGE
-       ===================================================== */
-
-    savePrompt(prompt) {
-
-        try {
-
-            localStorage.setItem(
-                "nova_last_prompt",
-                prompt
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "LocalStorage unavailable",
-                error
-            );
-        }
-    },
-
-    loadSavedData() {
-
-        try {
-
-            const savedPrompt =
-                localStorage.getItem(
-                    "nova_last_prompt"
-                );
-
-            if (
-                savedPrompt &&
-                this.elements.prompt &&
-                !this.elements.prompt.value
-            ) {
-
-                this.elements.prompt.value =
-                    savedPrompt;
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "Could not load saved data",
-                error
-            );
-        }
-    },
-
-    /* =====================================================
-       YEAR
-       ===================================================== */
-
-    updateYear() {
-
-        if (this.elements.year) {
-
-            this.elements.year.textContent =
-                new Date().getFullYear();
-        }
-    },
-
-    /* =====================================================
-       ESCAPE HTML
-       ===================================================== */
-
-    escapeHTML(value) {
-
-        const div =
-            document.createElement("div");
-
-        div.textContent =
-            String(value);
-
-        return div.innerHTML;
-    },
-
-    /* =====================================================
-       SCROLL
-       ===================================================== */
-
-    scrollTo(selector) {
-
-        const element =
-            document.querySelector(
-                selector
-            );
-
-        if (!element) {
-            return;
-        }
-
-        element.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-    }
+  maxPromptLength: 5000,
 };
 
-/* =========================================================
-   GLOBAL HELPERS
-   ========================================================= */
+// ============================================================
+// أدوات عامة
+// ============================================================
 
-window.NOVA =
-    NOVA;
-
-window.novaScroll =
-    function(selector) {
-
-        NOVA.scrollTo(
-            selector
-        );
-    };
-
-window.novaOpenModal =
-    function(title, content) {
-
-        NOVA.openModal(
-            title,
-            content
-        );
-    };
-
-window.novaCloseModal =
-    function() {
-
-        NOVA.closeModal();
-    };
-
-/* =========================================================
-   INITIALIZATION
-   ========================================================= */
-
-if (
-    document.readyState ===
-    "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        () => NOVA.init()
-    );
-
-} else {
-
-    NOVA.init();
+function getElement(id) {
+  return document.getElementById(id);
 }
 
-/* =========================================================
-   END NOVA APP ENGINE
-   ========================================================= */
+function escapeHTML(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function showToast(message, type = "info") {
+  const toast = getElement("nova-toast");
+
+  if (!toast) {
+    alert(message);
+    return;
+  }
+
+  toast.textContent = message;
+
+  toast.classList.remove(
+    "show",
+    "success",
+    "error",
+    "info"
+  );
+
+  toast.classList.add("show", type);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 4000);
+}
+
+// ============================================================
+// التخزين المحلي
+// ============================================================
+
+function savePrompt(prompt) {
+  try {
+    localStorage.setItem("nova_last_prompt", prompt);
+    localStorage.setItem(
+      "nova_last_prompt_time",
+      new Date().toISOString()
+    );
+  } catch (error) {
+    console.warn("تعذر حفظ الطلب:", error);
+  }
+}
+
+function getLastPrompt() {
+  try {
+    return localStorage.getItem("nova_last_prompt") || "";
+  } catch (error) {
+    return "";
+  }
+}
+
+// ============================================================
+// حالة التحميل
+// ============================================================
+
+function setLoading(isLoading) {
+  const button = getElement("generate-button");
+
+  if (!button) {
+    return;
+  }
+
+  if (isLoading) {
+    button.disabled = true;
+
+    button.dataset.originalText =
+      button.innerHTML;
+
+    button.innerHTML = `
+      <span class="generate-icon">⏳</span>
+      <span>جاري إنشاء المشروع...</span>
+    `;
+
+    button.classList.add("loading");
+  } else {
+    button.disabled = false;
+
+    button.innerHTML =
+      button.dataset.originalText ||
+      `
+      <span class="generate-icon">🚀</span>
+      <span>إنشاء المشروع</span>
+      `;
+
+    button.classList.remove("loading");
+  }
+}
+
+// ============================================================
+// نافذة NOVA
+// ============================================================
+
+function openModal(content = "") {
+  const modal = getElement("nova-modal");
+  const modalBody = getElement("modalBody");
+
+  if (!modal) {
+    return;
+  }
+
+  if (modalBody && content) {
+    modalBody.innerHTML = content;
+  }
+
+  modal.classList.add("active");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal() {
+  const modal = getElement("nova-modal");
+
+  if (!modal) {
+    return;
+  }
+
+  modal.classList.remove("active");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+// ============================================================
+// شاشة بدء إنشاء المشروع
+// ============================================================
+
+function showGeneratingModal(prompt) {
+  const safePrompt = escapeHTML(prompt);
+
+  const html = `
+    <div class="nova-generating">
+      <div class="nova-generating-icon">
+        ✨
+      </div>
+
+      <h2>
+        NOVA تعمل الآن
+      </h2>
+
+      <p>
+        تم استلام طلبك وإرساله إلى محرك الذكاء الاصطناعي الحقيقي.
+      </p>
+
+      <div class="nova-request-preview">
+        ${safePrompt}
+      </div>
+
+      <div class="nova-loading-line">
+        <span></span>
+      </div>
+
+      <small>
+        قد يستغرق إنشاء الرد عدة ثوانٍ...
+      </small>
+    </div>
+  `;
+
+  openModal(html);
+}
+
+// ============================================================
+// الاتصال بـ NOVA AI
+// ============================================================
+
+async function callNOVAAI(prompt) {
+  const controller = new AbortController();
+
+  const timeout = setTimeout(() => {
+    controller.abort();
+  }, NOVA_CONFIG.requestTimeout);
+
+  try {
+    const response = await fetch(
+      NOVA_CONFIG.aiEndpoint,
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+
+        body: JSON.stringify({
+          prompt: prompt,
+        }),
+
+        signal: controller.signal,
+      }
+    );
+
+    clearTimeout(timeout);
+
+    let data;
+
+    try {
+      data = await response.json();
+    } catch (error) {
+      throw new Error(
+        "وصل رد من الخادم ولكن لم يكن بصيغة صحيحة."
+      );
+    }
+
+    if (!response.ok) {
+      const serverError =
+        data?.error ||
+        data?.details ||
+        `HTTP ${response.status}`;
+
+      throw new Error(serverError);
+    }
+
+    if (!data || data.success !== true) {
+      throw new Error(
+        data?.error ||
+          data?.details ||
+          "لم تُرجع NOVA نتيجة صحيحة."
+      );
+    }
+
+    return data;
+  } catch (error) {
+    clearTimeout(timeout);
+
+    if (error.name === "AbortError") {
+      throw new Error(
+        "انتهى وقت الاتصال بالذكاء الاصطناعي. حاول مرة أخرى."
+      );
+    }
+
+    if (
+      error instanceof TypeError &&
+      error.message.includes("fetch")
+    ) {
+      throw new Error(
+        "تعذر الاتصال بخادم NOVA. تأكد من نشر Edge Function."
+      );
+    }
+
+    throw error;
+  }
+}
+
+// ============================================================
+// عرض نتيجة الذكاء الاصطناعي
+// ============================================================
+
+function showAIResult(data, prompt) {
+  const modalBody = getElement("modalBody");
+
+  if (!modalBody) {
+    return;
+  }
+
+  const provider = escapeHTML(
+    data.provider || "غير معروف"
+  );
+
+  const model = escapeHTML(
+    data.model || "غير معروف"
+  );
+
+  const keyNumber = escapeHTML(
+    data.keyNumber || "غير معروف"
+  );
+
+  const result = escapeHTML(
+    data.result || "لم يتم استلام نتيجة."
+  );
+
+  modalBody.innerHTML = `
+    <div class="nova-ai-result">
+
+      <div class="nova-result-header">
+
+        <div class="nova-result-icon">
+          🤖
+        </div>
+
+        <div>
+          <h2>
+            تم استلام رد NOVA
+          </h2>
+
+          <p>
+            الذكاء الاصطناعي الحقيقي متصل الآن.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="nova-ai-info">
+
+        <div class="nova-info-item">
+          <strong>المحرك</strong>
+          <span>${provider}</span>
+        </div>
+
+        <div class="nova-info-item">
+          <strong>النموذج</strong>
+          <span>${model}</span>
+        </div>
+
+        <div class="nova-info-item">
+          <strong>المفتاح المستخدم</strong>
+          <span>${keyNumber}</span>
+        </div>
+
+      </div>
+
+      <div class="nova-user-request">
+
+        <div class="nova-section-title">
+          طلبك
+        </div>
+
+        <div class="nova-request-box">
+          ${escapeHTML(prompt)}
+        </div>
+
+      </div>
+
+      <div class="nova-ai-response">
+
+        <div class="nova-section-title">
+          رد NOVA
+        </div>
+
+        <pre class="nova-response-box">${result}</pre>
+
+      </div>
+
+      <div class="nova-result-actions">
+
+        <button
+          type="button"
+          class="nova-copy-button"
+          onclick="copyAIResult()"
+        >
+          📋 نسخ الرد
+        </button>
+
+        <button
+          type="button"
+          class="nova-close-button"
+          onclick="closeModal()"
+        >
+          إغلاق
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+  window.NOVA_LAST_RESULT =
+    data.result || "";
+}
+
+// ============================================================
+// عرض الخطأ
+// ============================================================
+
+function showAIError(error) {
+  const modalBody = getElement("modalBody");
+
+  const message =
+    error instanceof Error
+      ? error.message
+      : String(error);
+
+  if (!modalBody) {
+    alert(message);
+    return;
+  }
+
+  modalBody.innerHTML = `
+    <div class="nova-ai-error">
+
+      <div class="nova-error-icon">
+        ⚠️
+      </div>
+
+      <h2>
+        حدث خطأ في الاتصال
+      </h2>
+
+      <p>
+        لم تتمكن NOVA من الحصول على رد من الذكاء الاصطناعي.
+      </p>
+
+      <div class="nova-error-details">
+        ${escapeHTML(message)}
+      </div>
+
+      <button
+        type="button"
+        class="nova-close-button"
+        onclick="closeModal()"
+      >
+        إغلاق
+      </button>
+
+    </div>
+  `;
+}
+
+// ============================================================
+// نسخ نتيجة الذكاء الاصطناعي
+// ============================================================
+
+async function copyAIResult() {
+  const result =
+    window.NOVA_LAST_RESULT || "";
+
+  if (!result) {
+    showToast(
+      "لا يوجد رد لنسخه.",
+      "error"
+    );
+
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(result);
+
+    showToast(
+      "تم نسخ الرد بنجاح ✅",
+      "success"
+    );
+  } catch (error) {
+    showToast(
+      "تعذر النسخ تلقائيًا.",
+      "error"
+    );
+  }
+}
+
+// ============================================================
+// إنشاء المشروع
+// ============================================================
+
+async function generateProject() {
+  const promptInput =
+    getElement("nova-prompt");
+
+  if (!promptInput) {
+    console.error(
+      "لم يتم العثور على nova-prompt"
+    );
+
+    return;
+  }
+
+  const prompt =
+    promptInput.value.trim();
+
+  if (!prompt) {
+    showToast(
+      "اكتب وصف المشروع أولًا.",
+      "error"
+    );
+
+    promptInput.focus();
+
+    return;
+  }
+
+  if (
+    prompt.length >
+    NOVA_CONFIG.maxPromptLength
+  ) {
+    showToast(
+      `الطلب طويل جدًا. الحد الأقصى ${NOVA_CONFIG.maxPromptLength} حرف.`,
+      "error"
+    );
+
+    return;
+  }
+
+  savePrompt(prompt);
+
+  setLoading(true);
+
+  showGeneratingModal(prompt);
+
+  try {
+    const data =
+      await callNOVAAI(prompt);
+
+    showAIResult(
+      data,
+      prompt
+    );
+
+    showToast(
+      "تم استلام رد الذكاء الاصطناعي ✅",
+      "success"
+    );
+  } catch (error) {
+    console.error(
+      "NOVA AI Error:",
+      error
+    );
+
+    showAIError(error);
+
+    showToast(
+      "تعذر الاتصال بالذكاء الاصطناعي.",
+      "error"
+    );
+  } finally {
+    setLoading(false);
+  }
+}
+
+// ============================================================
+// ربط زر إنشاء المشروع
+// ============================================================
+
+function initializeGenerateButton() {
+  const button =
+    getElement("generate-button");
+
+  const promptInput =
+    getElement("nova-prompt");
+
+  if (button) {
+    button.addEventListener(
+      "click",
+      generateProject
+    );
+  }
+
+  if (promptInput) {
+    promptInput.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          (event.ctrlKey ||
+            event.metaKey) &&
+          event.key === "Enter"
+        ) {
+          event.preventDefault();
+
+          generateProject();
+        }
+      }
+    );
+  }
+}
+
+// ============================================================
+// إغلاق النافذة
+// ============================================================
+
+function initializeModal() {
+  const modal =
+    getElement("nova-modal");
+
+  if (!modal) {
+    return;
+  }
+
+  const closeButton =
+    modal.querySelector(
+      ".modal-close"
+    );
+
+  if (closeButton) {
+    closeButton.addEventListener(
+      "click",
+      closeModal
+    );
+  }
+
+  const overlay =
+    modal.querySelector(
+      ".modal-overlay"
+    );
+
+  if (overlay) {
+    overlay.addEventListener(
+      "click",
+      closeModal
+    );
+  }
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key === "Escape"
+      ) {
+        closeModal();
+      }
+    }
+  );
+}
+
+// ============================================================
+// قائمة الهاتف
+// ============================================================
+
+function initializeMobileMenu() {
+  const menuButton =
+    getElement(
+      "mobile-menu-button"
+    );
+
+  const nav =
+    document.querySelector(
+      ".nova-nav"
+    );
+
+  if (!menuButton || !nav) {
+    return;
+  }
+
+  menuButton.addEventListener(
+    "click",
+    () => {
+      nav.classList.toggle(
+        "mobile-open"
+      );
+
+      menuButton.classList.toggle(
+        "active"
+      );
+    }
+  );
+}
+
+// ============================================================
+// استعادة آخر طلب
+// ============================================================
+
+function restoreLastPrompt() {
+  const input =
+    getElement("nova-prompt");
+
+  if (!input) {
+    return;
+  }
+
+  const lastPrompt =
+    getLastPrompt();
+
+  if (
+    lastPrompt &&
+    !input.value.trim()
+  ) {
+    // لا نضعه تلقائيًا حتى لا نزعج المستخدم.
+    input.placeholder =
+      "اكتب فكرة تطبيقك هنا...";
+  }
+}
+
+// ============================================================
+// تحديث السنة
+// ============================================================
+
+function updateCurrentYear() {
+  const year =
+    getElement("currentYear");
+
+  if (year) {
+    year.textContent =
+      new Date().getFullYear();
+  }
+}
+
+// ============================================================
+// حماية من إرسال النموذج
+// ============================================================
+
+function preventDefaultForms() {
+  document.addEventListener(
+    "submit",
+    (event) => {
+      const form =
+        event.target;
+
+      if (
+        form &&
+        form.id ===
+          "nova-builder-form"
+      ) {
+        event.preventDefault();
+
+        generateProject();
+      }
+    }
+  );
+}
+
+// ============================================================
+// فحص الاتصال الأساسي
+// ============================================================
+
+function printStartupInfo() {
+  console.log(
+    "%cNOVA AI APP BUILDER",
+    "font-size:20px;font-weight:bold;"
+  );
+
+  console.log(
+    "Version:",
+    NOVA_CONFIG.version
+  );
+
+  console.log(
+    "AI Endpoint:",
+    NOVA_CONFIG.aiEndpoint
+  );
+
+  console.log(
+    "NOVA جاهزة."
+  );
+}
+
+// ============================================================
+// تهيئة التطبيق
+// ============================================================
+
+function initializeNOVA() {
+  initializeGenerateButton();
+
+  initializeModal();
+
+  initializeMobileMenu();
+
+  restoreLastPrompt();
+
+  updateCurrentYear();
+
+  preventDefaultForms();
+
+  printStartupInfo();
+}
+
+// ============================================================
+// بدء NOVA
+// ============================================================
+
+if (
+  document.readyState ===
+  "loading"
+) {
+  document.addEventListener(
+    "DOMContentLoaded",
+    initializeNOVA
+  );
+} else {
+  initializeNOVA();
+}
+
+// ============================================================
+// جعل الدوال متاحة للأزرار الموجودة في HTML
+// ============================================================
+
+window.generateProject =
+  generateProject;
+
+window.callNOVAAI =
+  callNOVAAI;
+
+window.closeModal =
+  closeModal;
+
+window.copyAIResult =
+  copyAIResult;
+
+window.showToast =
+  showToast;
+
+window.NOVA_CONFIG =
+  NOVA_CONFIG;
+
+// ============================================================
+// نهاية الملف
+// ============================================================

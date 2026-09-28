@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NOVA AI — ابنِ تطبيقك بالذكاء الاصطناعي</title>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        NOVA AI — ابنِ تطبيقك بالذكاء الاصطناعي
+    </title>
 
     <meta
         name="description"
         content="NOVA منصة ذكية لبناء التطبيقات والمشاريع باستخدام الذكاء الاصطناعي."
     >
 
-    <meta name="theme-color" content="#ffffff">
+    <meta
+        name="theme-color"
+        content="#ffffff"
+    >
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      HEADER
@@ -26,36 +43,74 @@
 
     <div class="header-container">
 
-        <a href="index.html" class="nova-logo">
-            <span class="logo-icon">N</span>
-            <span class="logo-text">NOVA</span>
+
+        <a
+            href="index.html"
+            class="nova-logo"
+        >
+
+            <span class="logo-icon">
+                N
+            </span>
+
+            <span class="logo-text">
+                NOVA
+            </span>
+
         </a>
 
-        <nav class="nova-nav" id="novaNav">
 
-            <a href="#home">الرئيسية</a>
-            <a href="#features">المميزات</a>
-            <a href="#how">كيف تعمل؟</a>
-            <a href="#technology">التقنيات</a>
-            <a href="#support">الدعم</a>
+        <nav
+            class="nova-nav"
+            id="novaNav"
+        >
 
-            <a href="login.html" class="nav-login" id="loginNavLink">
+            <a href="#home">
+                الرئيسية
+            </a>
+
+            <a href="#features">
+                المميزات
+            </a>
+
+            <a href="#how">
+                كيف تعمل؟
+            </a>
+
+            <a href="#technology">
+                التقنيات
+            </a>
+
+            <a href="#support">
+                الدعم
+            </a>
+
+
+            <a
+                href="login.html"
+                class="nav-login"
+                id="loginNavLink"
+            >
                 تسجيل الدخول
             </a>
 
         </nav>
 
+
         <button
             class="mobile-menu-button"
-            id="mobileMenuButton"
+            id="mobile-menu-button"
             type="button"
+            aria-label="فتح القائمة"
         >
             ☰
         </button>
 
+
     </div>
 
 </header>
+
 
 
 <!-- =====================================================
@@ -64,25 +119,42 @@
 
 <main>
 
+
 <!-- =====================================================
      HERO
 ===================================================== -->
 
-<section class="hero-section" id="home">
+<section
+    class="hero-section"
+    id="home"
+>
 
     <div class="hero-container">
 
+
         <div class="hero-badge">
-            <span>✦</span>
+
+            <span>
+                ✦
+            </span>
+
             منصة بناء التطبيقات بالذكاء الاصطناعي
+
         </div>
+
+
 
         <h1 class="hero-title">
 
             حوّل فكرتك إلى
-            <span>تطبيق حقيقي</span>
+
+            <span>
+                تطبيق حقيقي
+            </span>
 
         </h1>
+
+
 
         <p class="hero-description">
 
@@ -93,13 +165,16 @@
         </p>
 
 
+
         <!-- =================================================
              AI BUILDER
         ================================================= -->
 
         <div class="ai-builder-box">
 
+
             <div class="ai-box-header">
+
 
                 <div class="ai-status">
 
@@ -111,41 +186,50 @@
 
                 </div>
 
+
                 <span class="ai-version">
                     AI BUILDER
                 </span>
 
+
             </div>
+
 
 
             <div class="prompt-area">
 
+
                 <textarea
                     id="nova-prompt"
                     class="nova-prompt"
-                    maxlength="20000"
+                    maxlength="5000"
                     placeholder="اكتب فكرة التطبيق الذي تريد بناءه...
 
 مثال:
 اعمل لي تطبيق متجر ملابس يحتوي على تسجيل الدخول والمنتجات والسلة وحساب المستخدم."
                 ></textarea>
 
+
             </div>
+
 
 
             <div class="prompt-footer">
 
+
                 <div class="prompt-info">
 
                     <span id="promptCounter">
-                        0 / 20000
+                        0 / 5000
                     </span>
 
                 </div>
 
+
+
                 <button
-                    id="generateButton"
-                    id="generate-button" class="generate-button"
+                    id="generate-button"
+                    class="generate-button"
                     type="button"
                 >
 
@@ -159,9 +243,12 @@
 
                 </button>
 
+
             </div>
 
+
         </div>
+
 
 
         <!-- =================================================
@@ -170,9 +257,12 @@
 
         <div class="quick-ideas">
 
+
             <span class="quick-title">
                 جرّب فكرة:
             </span>
+
+
 
             <button
                 type="button"
@@ -182,6 +272,8 @@
                 🛍️ متجر إلكتروني
             </button>
 
+
+
             <button
                 type="button"
                 class="idea-button"
@@ -189,6 +281,8 @@
             >
                 ✅ إدارة المهام
             </button>
+
+
 
             <button
                 type="button"
@@ -198,20 +292,27 @@
                 🏢 موقع شركة
             </button>
 
+
         </div>
+
 
     </div>
 
 </section>
 
 
+
 <!-- =====================================================
      TECHNOLOGY
 ===================================================== -->
 
-<section class="technologies-section" id="technology">
+<section
+    class="technologies-section"
+    id="technology"
+>
 
     <div class="section-container">
+
 
         <div class="section-heading">
 
@@ -219,9 +320,11 @@
                 TECHNOLOGY
             </span>
 
+
             <h2>
                 تقنيات حديثة لبناء مشاريعك
             </h2>
+
 
             <p>
                 NOVA مصممة لتجمع الأدوات التي يحتاجها
@@ -231,7 +334,9 @@
         </div>
 
 
+
         <div class="technology-grid">
+
 
             <div class="technology-card">
 
@@ -249,6 +354,7 @@
                 </p>
 
             </div>
+
 
 
             <div class="technology-card">
@@ -269,6 +375,7 @@
             </div>
 
 
+
             <div class="technology-card">
 
                 <div class="technology-icon">
@@ -285,6 +392,7 @@
                 </p>
 
             </div>
+
 
 
             <div class="technology-card">
@@ -305,6 +413,7 @@
             </div>
 
 
+
             <div class="technology-card">
 
                 <div class="technology-icon">
@@ -322,6 +431,7 @@
 
             </div>
 
+
         </div>
 
     </div>
@@ -329,13 +439,18 @@
 </section>
 
 
+
 <!-- =====================================================
      FEATURES
 ===================================================== -->
 
-<section class="features-section" id="features">
+<section
+    class="features-section"
+    id="features"
+>
 
     <div class="section-container">
+
 
         <div class="section-heading">
 
@@ -343,9 +458,11 @@
                 FEATURES
             </span>
 
+
             <h2>
                 كل أدوات مشروعك في مكان واحد
             </h2>
+
 
             <p>
                 NOVA تجمع مجموعة من الأدوات لمساعدتك
@@ -353,6 +470,7 @@
             </p>
 
         </div>
+
 
 
         <div class="features-grid">
@@ -376,6 +494,7 @@
             </div>
 
 
+
             <div class="feature-card">
 
                 <div class="feature-icon">
@@ -392,6 +511,7 @@
                 </p>
 
             </div>
+
 
 
             <div class="feature-card">
@@ -412,6 +532,7 @@
             </div>
 
 
+
             <div class="feature-card">
 
                 <div class="feature-icon">
@@ -428,6 +549,7 @@
                 </p>
 
             </div>
+
 
 
             <div class="feature-card">
@@ -448,6 +570,7 @@
             </div>
 
 
+
             <div class="feature-card">
 
                 <div class="feature-icon">
@@ -466,6 +589,7 @@
             </div>
 
 
+
             <div class="feature-card">
 
                 <div class="feature-icon">
@@ -482,6 +606,7 @@
                 </p>
 
             </div>
+
 
 
             <div class="feature-card">
@@ -509,13 +634,18 @@
 </section>
 
 
+
 <!-- =====================================================
      HOW IT WORKS
 ===================================================== -->
 
-<section class="how-section" id="how">
+<section
+    class="how-section"
+    id="how"
+>
 
     <div class="section-container">
+
 
         <div class="section-heading">
 
@@ -523,15 +653,18 @@
                 HOW IT WORKS
             </span>
 
+
             <h2>
                 كيف تعمل NOVA؟
             </h2>
+
 
             <p>
                 أربع خطوات بسيطة للبدء في بناء فكرتك.
             </p>
 
         </div>
+
 
 
         <div class="steps-grid">
@@ -559,6 +692,7 @@
             </div>
 
 
+
             <div class="step-card">
 
                 <div class="step-number">
@@ -581,6 +715,7 @@
             </div>
 
 
+
             <div class="step-card">
 
                 <div class="step-number">
@@ -601,6 +736,7 @@
                 </div>
 
             </div>
+
 
 
             <div class="step-card">
@@ -632,30 +768,40 @@
 </section>
 
 
+
 <!-- =====================================================
      SUPPORT
 ===================================================== -->
 
-<section class="support-section" id="support">
+<section
+    class="support-section"
+    id="support"
+>
 
     <div class="section-container">
 
+
         <div class="support-card">
 
+
             <div class="support-content">
+
 
                 <span class="section-label">
                     SUPPORT
                 </span>
 
+
                 <h2>
                     هل تحتاج إلى مساعدة؟
                 </h2>
+
 
                 <p>
                     إذا واجهت مشكلة أو لديك سؤال،
                     يمكنك التواصل مع فريق الدعم.
                 </p>
+
 
                 <button
                     type="button"
@@ -665,12 +811,15 @@
                     💬 تواصل مع الدعم
                 </button>
 
+
             </div>
+
 
 
             <div class="support-icon">
                 💬
             </div>
+
 
         </div>
 
@@ -678,7 +827,9 @@
 
 </section>
 
+
 </main>
+
 
 
 <!-- =====================================================
@@ -689,9 +840,14 @@
 
     <div class="footer-container">
 
+
         <div class="footer-brand">
 
-            <a href="index.html" class="nova-logo">
+
+            <a
+                href="index.html"
+                class="nova-logo"
+            >
 
                 <span class="logo-icon">
                     N
@@ -703,51 +859,66 @@
 
             </a>
 
+
             <p>
                 منصة ذكية لبناء التطبيقات والمشاريع
                 باستخدام الذكاء الاصطناعي.
             </p>
 
+
         </div>
 
 
+
         <div class="footer-links">
+
 
             <a href="#home">
                 الرئيسية
             </a>
 
+
             <a href="#features">
                 المميزات
             </a>
+
 
             <a href="#how">
                 كيف تعمل؟
             </a>
 
+
             <a href="#technology">
                 التقنيات
             </a>
+
 
             <a href="#support">
                 الدعم
             </a>
 
+
         </div>
+
 
 
         <div class="footer-copy">
 
             ©
+
             <span id="currentYear"></span>
+
             NOVA —
+
             جميع الحقوق محفوظة.
 
         </div>
 
+
     </div>
 
 </footer>
+
 
 
 <!-- =====================================================
@@ -756,11 +927,13 @@
 
 <div
     class="nova-modal"
-    id="novaModal"
+    id="nova-modal"
     aria-hidden="true"
 >
 
+
     <div class="modal-overlay"></div>
+
 
     <div
         class="modal-box"
@@ -768,13 +941,16 @@
         aria-modal="true"
     >
 
+
         <button
             class="modal-close"
             id="modalClose"
             type="button"
+            aria-label="إغلاق"
         >
             ×
         </button>
+
 
         <div
             class="modal-icon"
@@ -783,17 +959,23 @@
             ✨
         </div>
 
+
         <h2 id="modalTitle">
             NOVA
         </h2>
 
+
         <div id="modalBody">
+
             أهلاً بك في NOVA.
+
         </div>
+
 
     </div>
 
 </div>
+
 
 
 <!-- =====================================================
@@ -802,7 +984,7 @@
 
 <div
     class="nova-toast"
-    id="novaToast"
+    id="nova-toast"
     aria-live="polite"
 >
 
@@ -811,14 +993,19 @@
 </div>
 
 
+
 <!-- =====================================================
      SCRIPTS
 ===================================================== -->
 
 <script src="config.js"></script>
+
 <script src="supabase.js"></script>
+
 <script src="auth.js"></script>
+
 <script src="app.js"></script>
+
 
 
 <!-- =====================================================
@@ -827,184 +1014,285 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    const prompt =
-        document.getElementById("novaPrompt");
-
-    const counter =
-        document.getElementById("promptCounter");
-
-    const ideas =
-        document.querySelectorAll(".idea-button");
-
-    const currentYear =
-        document.getElementById("currentYear");
-
-    const mobileButton =
-        document.getElementById("mobileMenuButton");
-
-    const nav =
-        document.getElementById("novaNav");
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
 
-    /* =========================
-       YEAR
-    ========================= */
+        /* =========================
+           ELEMENTS
+        ========================= */
 
-    if (currentYear) {
-
-        currentYear.textContent =
-            new Date().getFullYear();
-
-    }
+        const prompt =
+            document.getElementById(
+                "nova-prompt"
+            );
 
 
-    /* =========================
-       PROMPT COUNTER
-    ========================= */
+        const counter =
+            document.getElementById(
+                "promptCounter"
+            );
 
-    function updateCounter() {
 
-        if (!prompt || !counter) {
-            return;
+        const ideas =
+            document.querySelectorAll(
+                ".idea-button"
+            );
+
+
+        const currentYear =
+            document.getElementById(
+                "currentYear"
+            );
+
+
+        const mobileButton =
+            document.getElementById(
+                "mobile-menu-button"
+            );
+
+
+        const nav =
+            document.getElementById(
+                "novaNav"
+            );
+
+
+
+        /* =========================
+           YEAR
+        ========================= */
+
+        if (currentYear) {
+
+            currentYear.textContent =
+                new Date().getFullYear();
+
         }
 
-        counter.textContent =
-            prompt.value.length + " / 20000";
-
-    }
 
 
-    if (prompt) {
+        /* =========================
+           PROMPT COUNTER
+        ========================= */
 
-        prompt.addEventListener(
-            "input",
-            updateCounter
-        );
-
-        updateCounter();
-
-    }
+        function updateCounter() {
 
 
-    /* =========================
-       QUICK IDEAS
-    ========================= */
+            if (
+                !prompt ||
+                !counter
+            ) {
 
-    ideas.forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                if (!prompt) {
-                    return;
-                }
-
-                const text =
-                    button.getAttribute(
-                        "data-prompt"
-                    );
-
-                if (text) {
-
-                    prompt.value = text;
-
-                    updateCounter();
-
-                    prompt.focus();
-
-                }
+                return;
 
             }
-        );
-
-    });
 
 
-    /* =========================
-       MOBILE MENU
-    ========================= */
-
-    if (mobileButton && nav) {
-
-        mobileButton.addEventListener(
-            "click",
-            function () {
-
-                nav.classList.toggle(
-                    "mobile-open"
-                );
-
-            }
-        );
+            counter.textContent =
+                prompt.value.length +
+                " / 5000";
 
 
-        nav.querySelectorAll("a").forEach(
-            function (link) {
+        }
 
-                link.addEventListener(
+
+
+        if (prompt) {
+
+
+            prompt.addEventListener(
+                "input",
+                updateCounter
+            );
+
+
+            updateCounter();
+
+
+        }
+
+
+
+        /* =========================
+           QUICK IDEAS
+        ========================= */
+
+        ideas.forEach(
+            function (button) {
+
+
+                button.addEventListener(
                     "click",
                     function () {
 
-                        nav.classList.remove(
-                            "mobile-open"
-                        );
+
+                        if (!prompt) {
+
+                            return;
+
+                        }
+
+
+                        const text =
+                            button.getAttribute(
+                                "data-prompt"
+                            );
+
+
+                        if (text) {
+
+
+                            prompt.value =
+                                text;
+
+
+                            updateCounter();
+
+
+                            prompt.focus();
+
+
+                        }
+
 
                     }
                 );
 
+
             }
         );
 
-    }
 
 
-    /* =========================
-       SMOOTH SCROLL
-    ========================= */
+        /* =========================
+           MOBILE MENU
+        ========================= */
 
-    document.querySelectorAll(
-        'a[href^="#"]'
-    ).forEach(function (link) {
+        if (
+            mobileButton &&
+            nav
+        ) {
 
-        link.addEventListener(
-            "click",
-            function (event) {
 
-                const targetId =
-                    link.getAttribute("href");
+            mobileButton.addEventListener(
+                "click",
+                function () {
 
-                if (!targetId ||
-                    targetId === "#") {
-                    return;
-                }
 
-                const target =
-                    document.querySelector(
-                        targetId
+                    nav.classList.toggle(
+                        "mobile-open"
                     );
 
-                if (!target) {
-                    return;
+
                 }
+            );
 
-                event.preventDefault();
 
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
 
-            }
-        );
+            nav
+                .querySelectorAll("a")
+                .forEach(
+                    function (link) {
 
-    });
 
-});
+                        link.addEventListener(
+                            "click",
+                            function () {
+
+
+                                nav.classList.remove(
+                                    "mobile-open"
+                                );
+
+
+                            }
+                        );
+
+
+                    }
+                );
+
+
+        }
+
+
+
+        /* =========================
+           SMOOTH SCROLL
+        ========================= */
+
+        document
+            .querySelectorAll(
+                'a[href^="#"]'
+            )
+            .forEach(
+                function (link) {
+
+
+                    link.addEventListener(
+                        "click",
+                        function (event) {
+
+
+                            const targetId =
+                                link.getAttribute(
+                                    "href"
+                                );
+
+
+                            if (
+                                !targetId ||
+                                targetId === "#"
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            const target =
+                                document.querySelector(
+                                    targetId
+                                );
+
+
+                            if (!target) {
+
+                                return;
+
+                            }
+
+
+                            event.preventDefault();
+
+
+                            target.scrollIntoView(
+                                {
+                                    behavior:
+                                        "smooth",
+
+                                    block:
+                                        "start"
+                                }
+                            );
+
+
+                        }
+                    );
+
+
+                }
+            );
+
+
+    }
+);
 
 </script>
 
+
 </body>
+
 </html>

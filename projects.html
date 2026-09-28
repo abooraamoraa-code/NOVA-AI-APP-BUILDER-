@@ -1,0 +1,1830 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NOVA - مشاريعي</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(124, 58, 237, 0.18),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(37, 99, 235, 0.14),
+                    transparent 35%
+                ),
+                #070b16;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .nova-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 74px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 28px;
+
+            background: rgba(7, 11, 22, 0.94);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(18px);
+        }
+
+        .nova-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .nova-brand-icon {
+            width: 43px;
+            height: 43px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #2563eb
+                );
+
+            box-shadow:
+                0 10px 35px
+                rgba(124,58,237,0.35);
+        }
+
+        .nova-header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-email {
+            max-width: 250px;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            color: #9da8bd;
+            font-size: 14px;
+        }
+
+        .header-btn {
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.09);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            color: white;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .header-btn:hover {
+            background:
+                rgba(255,255,255,0.09);
+        }
+
+        .logout-btn {
+            color: #ff9b9b;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .dashboard {
+            width:
+                min(
+                    1200px,
+                    calc(100% - 40px)
+                );
+
+            margin: auto;
+
+            padding:
+                45px 0 80px;
+        }
+
+        .welcome {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 25px;
+
+            margin-bottom: 35px;
+        }
+
+        .welcome h1 {
+            margin: 0 0 10px;
+
+            font-size: 40px;
+        }
+
+        .welcome p {
+            margin: 0;
+
+            color: #9da8bd;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+        .new-project-btn {
+            border: 0;
+
+            padding:
+                14px 22px;
+
+            border-radius: 13px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7c3aed,
+                    #2563eb
+                );
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 12px 35px
+                rgba(67,56,202,0.28);
+
+            transition: 0.2s;
+        }
+
+        .new-project-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           STATS
+        ========================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 42px;
+        }
+
+        .stat {
+            padding: 24px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.035);
+        }
+
+        .stat-label {
+            color: #929db3;
+
+            font-size: 14px;
+
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+
+            font-weight: 800;
+        }
+
+        /* =========================
+           PROJECT TITLE
+        ========================= */
+
+        .projects-title {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .projects-title h2 {
+            margin: 0;
+
+            font-size: 25px;
+        }
+
+        .refresh-btn {
+            padding: 9px 14px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           PROJECT GRID
+        ========================= */
+
+        .projects-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .project-card {
+            min-height: 235px;
+
+            padding: 22px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.055),
+                    rgba(255,255,255,0.018)
+                );
+
+            transition: 0.25s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+
+            border-color:
+                rgba(124,58,237,0.45);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.25);
+        }
+
+        .project-icon {
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(124,58,237,0.14);
+
+            font-size: 23px;
+        }
+
+        .project-name {
+            margin: 0 0 8px;
+
+            font-size: 20px;
+        }
+
+        .project-description {
+            min-height: 48px;
+
+            margin: 0 0 16px;
+
+            color: #9da8bd;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        .project-info {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-top: 10px;
+        }
+
+        .status {
+            padding:
+                6px 10px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(34,197,94,0.12);
+
+            color: #70e29b;
+
+            font-size: 12px;
+        }
+
+        .framework {
+            color: #8e99ae;
+
+            font-size: 12px;
+        }
+
+        .project-actions {
+            display: flex;
+
+            gap: 8px;
+
+            margin-top: 18px;
+        }
+
+        .project-action {
+            flex: 1;
+
+            padding: 9px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            color: white;
+
+            cursor: pointer;
+        }
+
+        .project-action:hover {
+            background:
+                rgba(255,255,255,0.09);
+        }
+
+        .delete-action {
+            color: #ff8e8e;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 70px 25px;
+
+            border:
+                1px dashed
+                rgba(255,255,255,0.13);
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.02);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+
+            margin-bottom: 15px;
+        }
+
+        .empty h3 {
+            margin: 0 0 10px;
+
+            font-size: 24px;
+        }
+
+        .empty p {
+            color: #9da8bd;
+
+            line-height: 1.7;
+
+            margin-bottom: 22px;
+        }
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+            grid-column: 1 / -1;
+
+            padding: 70px;
+
+            text-align: center;
+
+            color: #aab4c8;
+        }
+
+        .spinner {
+            width: 42px;
+            height: 42px;
+
+            margin:
+                0 auto 18px;
+
+            border:
+                4px solid
+                rgba(255,255,255,0.1);
+
+            border-top-color:
+                #7c3aed;
+
+            border-radius: 50%;
+
+            animation:
+                spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+
+        }
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        .error {
+            grid-column: 1 / -1;
+
+            padding: 35px;
+
+            text-align: center;
+
+            border:
+                1px solid
+                rgba(239,68,68,0.25);
+
+            border-radius: 18px;
+
+            background:
+                rgba(239,68,68,0.06);
+        }
+
+        .error h3 {
+            color: #ff9292;
+        }
+
+        .error p {
+            color: #c1a8a8;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        .toast {
+            position: fixed;
+
+            left: 50%;
+            bottom: 25px;
+
+            transform:
+                translateX(-50%)
+                translateY(30px);
+
+            padding:
+                13px 20px;
+
+            border-radius: 12px;
+
+            background: #111827;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            color: white;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: 0.25s;
+
+            z-index: 9999;
+        }
+
+        .toast.show {
+            opacity: 1;
+
+            transform:
+                translateX(-50%)
+                translateY(0);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .projects-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .nova-header {
+                padding: 0 14px;
+            }
+
+            .user-email {
+                display: none;
+            }
+
+            .dashboard {
+                width:
+                    calc(100% - 24px);
+
+                padding-top: 30px;
+            }
+
+            .welcome {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .welcome h1 {
+                font-size: 31px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="nova-header">
+
+        <div class="nova-brand">
+
+            <div class="nova-brand-icon">
+                ✦
+            </div>
+
+            <span>
+                NOVA
+            </span>
+
+        </div>
+
+
+        <div class="nova-header-right">
+
+            <span
+                id="userEmail"
+                class="user-email">
+
+                جاري التحميل...
+
+            </span>
+
+
+            <button
+                id="homeButton"
+                class="header-btn">
+
+                الرئيسية
+
+            </button>
+
+
+            <button
+                id="logoutButton"
+                class="header-btn logout-btn">
+
+                تسجيل الخروج
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="dashboard">
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <div>
+
+                <h1>
+                    مشاريعي 🚀
+                </h1>
+
+                <p>
+                    أنشئ تطبيقاتك وأدر مشاريعك
+                    باستخدام NOVA AI.
+                </p>
+
+            </div>
+
+
+            <button
+                id="newProjectButton"
+                class="new-project-btn">
+
+                ＋ مشروع جديد
+
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             STATS
+        ========================== -->
+
+        <section class="stats">
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    إجمالي المشاريع
+                </div>
+
+                <div
+                    id="totalProjects"
+                    class="stat-value">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    المشاريع النشطة
+                </div>
+
+                <div
+                    id="activeProjects"
+                    class="stat-value">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    NOVA AI
+                </div>
+
+                <div class="stat-value">
+
+                    جاهز ✨
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =========================
+             TITLE
+        ========================== -->
+
+        <section class="projects-title">
+
+            <h2>
+                جميع مشاريعك
+            </h2>
+
+
+            <button
+                id="refreshButton"
+                class="refresh-btn">
+
+                ↻ تحديث
+
+            </button>
+
+        </section>
+
+
+        <!-- =========================
+             PROJECTS
+        ========================== -->
+
+        <section
+            id="projectsGrid"
+            class="projects-grid">
+
+            <div class="loading">
+
+                <div class="spinner"></div>
+
+                جاري تحميل المشاريع...
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- TOAST -->
+
+    <div
+        id="toast"
+        class="toast">
+    </div>
+
+
+    <!-- =========================
+         NOVA FILES
+    ========================== -->
+
+    <script src="config.js"></script>
+
+    <script src="supabase.js"></script>
+
+    <script src="auth.js"></script>
+
+    <script src="database.js"></script>
+
+
+    <!-- =========================
+         PAGE JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        const projectsGrid =
+            document.getElementById(
+                "projectsGrid"
+            );
+
+        const totalProjects =
+            document.getElementById(
+                "totalProjects"
+            );
+
+        const activeProjects =
+            document.getElementById(
+                "activeProjects"
+            );
+
+        const userEmail =
+            document.getElementById(
+                "userEmail"
+            );
+
+        const newProjectButton =
+            document.getElementById(
+                "newProjectButton"
+            );
+
+        const refreshButton =
+            document.getElementById(
+                "refreshButton"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+        const homeButton =
+            document.getElementById(
+                "homeButton"
+            );
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        /* =========================
+           TOAST
+        ========================== */
+
+        function showToast(message) {
+
+            toast.textContent =
+                message;
+
+            toast.classList.add(
+                "show"
+            );
+
+            setTimeout(
+                function() {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3000
+            );
+
+        }
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================== */
+
+        function escapeHTML(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        /* =========================
+           GET ICON
+        ========================== */
+
+        function getProjectIcon(
+            project
+        ) {
+
+            const framework =
+                String(
+                    project.framework ||
+                    ""
+                ).toLowerCase();
+
+
+            if (
+                framework.includes(
+                    "react"
+                )
+            ) {
+                return "⚛️";
+            }
+
+
+            if (
+                framework.includes(
+                    "vue"
+                )
+            ) {
+                return "💚";
+            }
+
+
+            if (
+                framework.includes(
+                    "next"
+                )
+            ) {
+                return "▲";
+            }
+
+
+            if (
+                framework.includes(
+                    "mobile"
+                )
+            ) {
+                return "📱";
+            }
+
+
+            if (
+                framework.includes(
+                    "game"
+                )
+            ) {
+                return "🎮";
+            }
+
+
+            if (
+                framework.includes(
+                    "shop"
+                )
+            ) {
+                return "🛒";
+            }
+
+
+            return "🚀";
+
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        function getStatus(
+            status
+        ) {
+
+            const value =
+                String(
+                    status ||
+                    "active"
+                ).toLowerCase();
+
+
+            if (
+                value ===
+                "completed"
+            ) {
+                return "مكتمل";
+            }
+
+
+            if (
+                value ===
+                "draft"
+            ) {
+                return "مسودة";
+            }
+
+
+            if (
+                value ===
+                "building"
+            ) {
+                return "قيد الإنشاء";
+            }
+
+
+            if (
+                value ===
+                "archived"
+            ) {
+                return "مؤرشف";
+            }
+
+
+            return "نشط";
+
+        }
+
+
+        /* =========================
+           DATE
+        ========================== */
+
+        function formatDate(
+            value
+        ) {
+
+            if (!value) {
+                return "";
+            }
+
+            try {
+
+                return new Date(
+                    value
+                ).toLocaleDateString(
+                    "ar",
+                    {
+                        year:
+                            "numeric",
+                        month:
+                            "short",
+                        day:
+                            "numeric"
+                    }
+                );
+
+            } catch (error) {
+
+                return "";
+
+            }
+
+        }
+
+
+        /* =========================
+           LOAD USER
+        ========================== */
+
+        async function loadUser() {
+
+            try {
+
+                const user =
+                    await NOVA_AUTH.getUser();
+
+
+                if (!user) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return null;
+
+                }
+
+
+                userEmail.textContent =
+                    user.email ||
+                    "مستخدم NOVA";
+
+
+                return user;
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
+
+                window.location.href =
+                    "login.html";
+
+                return null;
+
+            }
+
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================== */
+
+        function showEmpty() {
+
+            projectsGrid.innerHTML = `
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        🚀
+                    </div>
+
+                    <h3>
+                        لا توجد مشاريع حتى الآن
+                    </h3>
+
+                    <p>
+                        ابدأ أول مشروع لك مع NOVA AI
+                        وأنشئ تطبيقك من وصف بسيط.
+                    </p>
+
+                    <button
+                        id="emptyButton"
+                        class="new-project-btn">
+
+                        ＋ إنشاء أول مشروع
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            const button =
+                document.getElementById(
+                    "emptyButton"
+                );
+
+
+            if (button) {
+
+                button.onclick =
+                    function() {
+
+                        window.location.href =
+                            "builder.html";
+
+                    };
+
+            }
+
+        }
+
+
+        /* =========================
+           PROJECT CARD
+        ========================== */
+
+        function createCard(
+            project
+        ) {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "project-card";
+
+
+            const name =
+                escapeHTML(
+                    project.name ||
+                    "مشروع جديد"
+                );
+
+
+            const description =
+                escapeHTML(
+                    project.description ||
+                    "لا يوجد وصف لهذا المشروع."
+                );
+
+
+            const framework =
+                escapeHTML(
+                    project.framework ||
+                    "NOVA"
+                );
+
+
+            const status =
+                getStatus(
+                    project.status
+                );
+
+
+            const icon =
+                getProjectIcon(
+                    project
+                );
+
+
+            const date =
+                formatDate(
+                    project.updated_at ||
+                    project.created_at
+                );
+
+
+            card.innerHTML = `
+
+                <div class="project-icon">
+                    ${icon}
+                </div>
+
+                <h3 class="project-name">
+                    ${name}
+                </h3>
+
+                <p class="project-description">
+                    ${description}
+                </p>
+
+                <div class="project-info">
+
+                    <span class="status">
+                        ${escapeHTML(status)}
+                    </span>
+
+                    <span class="framework">
+                        ${framework}
+                    </span>
+
+                </div>
+
+                <div class="project-info">
+
+                    <span class="framework">
+                        آخر تحديث
+                    </span>
+
+                    <span class="framework">
+                        ${escapeHTML(date)}
+                    </span>
+
+                </div>
+
+                <div class="project-actions">
+
+                    <button
+                        class="project-action open-project"
+                        data-id="${escapeHTML(project.id)}">
+
+                        فتح
+
+                    </button>
+
+                    <button
+                        class="project-action delete-action delete-project"
+                        data-id="${escapeHTML(project.id)}">
+
+                        حذف
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            return card;
+
+        }
+
+
+        /* =========================
+           LOAD PROJECTS
+        ========================== */
+
+        async function loadProjects() {
+
+            projectsGrid.innerHTML = `
+
+                <div class="loading">
+
+                    <div class="spinner"></div>
+
+                    جاري تحميل المشاريع...
+
+                </div>
+
+            `;
+
+
+            try {
+
+                if (
+                    typeof NOVA_DB ===
+                    "undefined"
+                ) {
+
+                    throw new Error(
+                        "database.js غير محمل"
+                    );
+
+                }
+
+
+                const projects =
+                    await NOVA_DB.getProjects();
+
+
+                console.log(
+                    "NOVA PROJECTS:",
+                    projects
+                );
+
+
+                if (
+                    !projects ||
+                    projects.length === 0
+                ) {
+
+                    totalProjects.textContent =
+                        "0";
+
+                    activeProjects.textContent =
+                        "0";
+
+                    showEmpty();
+
+                    return;
+
+                }
+
+
+                totalProjects.textContent =
+                    projects.length;
+
+
+                const active =
+                    projects.filter(
+                        function(project) {
+
+                            const status =
+                                String(
+                                    project.status ||
+                                    "active"
+                                ).toLowerCase();
+
+
+                            return (
+                                status !==
+                                "archived"
+                                &&
+                                status !==
+                                "completed"
+                            );
+
+                        }
+                    ).length;
+
+
+                activeProjects.textContent =
+                    active;
+
+
+                projectsGrid.innerHTML =
+                    "";
+
+
+                projects.forEach(
+                    function(project) {
+
+                        projectsGrid.appendChild(
+                            createCard(
+                                project
+                            )
+                        );
+
+                    }
+                );
+
+
+                attachEvents();
+
+
+            } catch (error) {
+
+                console.error(
+                    "NOVA DATABASE ERROR:",
+                    error
+                );
+
+
+                projectsGrid.innerHTML = `
+
+                    <div class="error">
+
+                        <h3>
+                            حدث خطأ أثناء تحميل المشاريع
+                        </h3>
+
+                        <p>
+                            تعذر الاتصال بقاعدة بيانات NOVA.
+                        </p>
+
+                        <button
+                            id="retryButton"
+                            class="new-project-btn">
+
+                            إعادة المحاولة
+
+                        </button>
+
+                    </div>
+
+                `;
+
+
+                const retry =
+                    document.getElementById(
+                        "retryButton"
+                    );
+
+
+                if (retry) {
+
+                    retry.onclick =
+                        loadProjects;
+
+                }
+
+            }
+
+        }
+
+
+        /* =========================
+           EVENTS
+        ========================== */
+
+        function attachEvents() {
+
+            document
+                .querySelectorAll(
+                    ".open-project"
+                )
+                .forEach(
+                    function(button) {
+
+                        button.onclick =
+                            function() {
+
+                                const id =
+                                    button.dataset.id;
+
+
+                                if (!id) {
+                                    return;
+                                }
+
+
+                                window.location.href =
+                                    "builder.html?id=" +
+                                    encodeURIComponent(
+                                        id
+                                    );
+
+                            };
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".delete-project"
+                )
+                .forEach(
+                    function(button) {
+
+                        button.onclick =
+                            async function() {
+
+                                const id =
+                                    button.dataset.id;
+
+
+                                if (!id) {
+                                    return;
+                                }
+
+
+                                const confirmed =
+                                    confirm(
+                                        "هل أنت متأكد من حذف هذا المشروع؟"
+                                    );
+
+
+                                if (!confirmed) {
+                                    return;
+                                }
+
+
+                                button.disabled =
+                                    true;
+
+
+                                button.textContent =
+                                    "جاري الحذف...";
+
+
+                                try {
+
+                                    await NOVA_DB.deleteProject(
+                                        id
+                                    );
+
+
+                                    showToast(
+                                        "تم حذف المشروع"
+                                    );
+
+
+                                    await loadProjects();
+
+
+                                } catch (error) {
+
+                                    console.error(
+                                        error
+                                    );
+
+
+                                    showToast(
+                                        "حدث خطأ أثناء الحذف"
+                                    );
+
+
+                                    button.disabled =
+                                        false;
+
+
+                                    button.textContent =
+                                        "حذف";
+
+                                }
+
+                            };
+
+                    }
+                );
+
+        }
+
+
+        /* =========================
+           NEW PROJECT
+        ========================== */
+
+        newProjectButton.onclick =
+            function() {
+
+                window.location.href =
+                    "builder.html";
+
+            };
+
+
+        /* =========================
+           REFRESH
+        ========================== */
+
+        refreshButton.onclick =
+            async function() {
+
+                refreshButton.disabled =
+                    true;
+
+                refreshButton.textContent =
+                    "جاري التحديث...";
+
+
+                await loadProjects();
+
+
+                refreshButton.disabled =
+                    false;
+
+                refreshButton.textContent =
+                    "↻ تحديث";
+
+            };
+
+
+        /* =========================
+           HOME
+        ========================== */
+
+        homeButton.onclick =
+            function() {
+
+                window.location.href =
+                    "index.html";
+
+            };
+
+
+        /* =========================
+           LOGOUT
+        ========================== */
+
+        logoutButton.onclick =
+            async function() {
+
+                logoutButton.disabled =
+                    true;
+
+                logoutButton.textContent =
+                    "جاري الخروج...";
+
+
+                try {
+
+                    await NOVA_AUTH.logout();
+
+
+                    window.location.href =
+                        "index.html";
+
+
+                } catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+                    logoutButton.textContent =
+                        "تسجيل الخروج";
+
+
+                    showToast(
+                        "حدث خطأ أثناء تسجيل الخروج"
+                    );
+
+                }
+
+            };
+
+
+        /* =========================
+           START
+        ========================== */
+
+        async function startNOVA() {
+
+            const user =
+                await loadUser();
+
+
+            if (!user) {
+                return;
+            }
+
+
+            await loadProjects();
+
+        }
+
+
+        /* =========================
+           SUPABASE READY
+        ========================== */
+
+        function waitForNOVA() {
+
+            if (
+                typeof NOVA_SUPABASE !==
+                "undefined"
+            ) {
+
+                startNOVA();
+
+                return;
+
+            }
+
+
+            window.addEventListener(
+                "nova:supabase-ready",
+                function() {
+
+                    startNOVA();
+
+                },
+                {
+                    once: true
+                }
+            );
+
+        }
+
+
+        waitForNOVA();
+
+    </script>
+
+</body>
+
+</html>

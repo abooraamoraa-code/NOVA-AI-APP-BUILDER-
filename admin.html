@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NOVA — لوحة الإدارة</title>
+
+  <meta name="description" content="لوحة إدارة منصة NOVA AI App Builder">
+
+  <link rel="stylesheet" href="admin.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="config.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script src="database.js"></script>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       NOVA ADMIN
+       لوحة الإدارة الرئيسية
+  ========================================================== -->
+
+  <div id="adminApp">
+
+    <!-- شاشة التحميل -->
+    <div id="loadingScreen" class="loading-screen">
+      <div class="loading-box">
+        <div class="nova-loader"></div>
+        <h2>جاري تحميل لوحة الإدارة</h2>
+        <p>يرجى الانتظار...</p>
+      </div>
+    </div>
+
+
+    <!-- =====================================================
+         التطبيق
+    ====================================================== -->
+
+    <div id="dashboard" class="dashboard hidden">
+
+      <!-- ==============================
+           SIDEBAR
+      =============================== -->
+
+      <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+          <div class="brand">
+
+            <div class="brand-logo">
+              N
+            </div>
+
+            <div class="brand-text">
+              <strong>NOVA</strong>
+              <span>ADMIN</span>
+            </div>
+
+          </div>
+
+          <button
+            type="button"
+            class="close-sidebar"
+            id="closeSidebar">
+            ×
+          </button>
+
+        </div>
+
+
+        <!-- معلومات المدير -->
+
+        <div class="admin-profile">
+
+          <div class="admin-avatar" id="adminAvatar">
+            A
+          </div>
+
+          <div class="admin-info">
+
+            <strong id="adminName">
+              المدير
+            </strong>
+
+            <span id="adminEmail">
+              ...
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- القائمة -->
+
+        <nav class="admin-nav">
+
+          <button
+            type="button"
+            class="nav-item active"
+            data-section="overview">
+
+            <span class="nav-icon">📊</span>
+            <span>الرئيسية</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="users">
+
+            <span class="nav-icon">👥</span>
+            <span>المستخدمون</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="projects">
+
+            <span class="nav-icon">📁</span>
+            <span>المشاريع</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="products">
+
+            <span class="nav-icon">🛍️</span>
+            <span>المنتجات والنسخ</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="ai">
+
+            <span class="nav-icon">🤖</span>
+            <span>طلبات الذكاء الاصطناعي</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="orders">
+
+            <span class="nav-icon">💳</span>
+            <span>الطلبات والمدفوعات</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="support">
+
+            <span class="nav-icon">❤️</span>
+            <span>الدعم</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="complaints">
+
+            <span class="nav-icon">⚠️</span>
+            <span>الشكاوى</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="content">
+
+            <span class="nav-icon">📝</span>
+            <span>محتوى الصفحات</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="announcements">
+
+            <span class="nav-icon">📢</span>
+            <span>الإعلانات والعروض</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="settings">
+
+            <span class="nav-icon">⚙️</span>
+            <span>إعدادات المنصة</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="nav-item"
+            data-section="logs">
+
+            <span class="nav-icon">📜</span>
+            <span>سجل العمليات</span>
+
+          </button>
+
+        </nav>
+
+
+        <!-- أسفل القائمة -->
+
+        <div class="sidebar-footer">
+
+          <button
+            type="button"
+            class="footer-button"
+            id="openSiteButton">
+
+            🌐
+            <span>فتح الموقع</span>
+
+          </button>
+
+
+          <button
+            type="button"
+            class="footer-button logout"
+            id="logoutButton">
+
+            🚪
+            <span>تسجيل الخروج</span>
+
+          </button>
+
+        </div>
+
+      </aside>
+
+
+      <!-- ==============================
+           MAIN
+      =============================== -->
+
+      <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+          <button
+            type="button"
+            class="menu-button"
+            id="menuButton">
+            ☰
+          </button>
+
+
+          <div class="page-heading">
+
+            <h1 id="pageTitle">
+              لوحة الإدارة
+            </h1>
+
+            <p id="pageDescription">
+              إدارة منصة NOVA بالكامل
+            </p>
+
+          </div>
+
+
+          <div class="topbar-actions">
+
+            <button
+              type="button"
+              class="icon-button"
+              id="refreshButton"
+              title="تحديث">
+              🔄
+            </button>
+
+            <button
+              type="button"
+              class="icon-button"
+              id="notificationButton"
+              title="الإشعارات">
+              🔔
+              <span
+                class="notification-dot"
+                id="notificationDot">
+              </span>
+            </button>
+
+          </div>
+
+        </header>
+
+
+        <!-- ======================================
+             CONTENT
+        ======================================= -->
+
+        <div class="content-area">
+
+
+          <!-- ==================================================
+               OVERVIEW
+          =================================================== -->
+
+          <section
+            class="admin-section active-section"
+            id="section-overview">
+
+
+            <div class="section-header">
+
+              <div>
+
+                <span class="section-kicker">
+                  NOVA CONTROL CENTER
+                </span>
+
+                <h2>
+                  لوحة التحكم
+                </h2>
+
+                <p>
+                  نظرة عامة على المنصة والأنشطة الحالية.
+                </p>
+
+              </div>
+
+
+              <button
+                type="button"
+                class="primary-button"
+                id="quickAddButton">
+
+                ＋ إضافة جديد
+
+              </button>
+
+            </div>
+
+
+            <!-- الإحصائيات -->
+
+            <div class="stats-grid">
+
+
+              <div class="stat-card">
+
+                <div class="stat-icon users">
+                  👥
+                </div>
+
+                <div class="stat-content">
+
+                  <span>
+                    المستخدمون
+                  </span>
+
+                  <strong id="statUsers">
+                    0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="stat-card">
+
+                <div class="stat-icon projects">
+                  📁
+                </div>
+
+                <div class="stat-content">
+
+                  <span>
+                    المشاريع
+                  </span>
+
+                  <strong id="statProjects">
+                    0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="stat-card">
+
+                <div class="stat-icon ai">
+                  🤖
+                </div>
+
+                <div class="stat-content">
+
+                  <span>
+                    طلبات AI
+                  </span>
+
+                  <strong id="statAI">
+                    0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              <div class="stat-card">
+
+                <div class="stat-icon orders">
+                  💳
+                </div>
+
+                <div class="stat-content">
+
+                  <span>
+                    الطلبات
+                  </span>
+
+                  <strong id="statOrders">
+                    0
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+
+            <!-- الإجراءات السريعة -->
+
+            <div class="panel">
+
+              <div class="panel-header">
+
+                <div>
+
+                  <h3>
+                    الإجراءات السريعة
+                  </h3>
+
+                  <p>
+                    الوصول السريع إلى أهم أدوات الإدارة.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="quick-actions">
+
+
+                <button
+                  type="button"
+                  class="quick-action"
+                  data-action="add-product">
+
+                  <span>🛍️</span>
+
+                  <strong>
+                    إضافة منتج
+                  </strong>
+
+                  <small>
+                    نسخة مجانية أو مدفوعة
+                  </small>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="quick-action"
+                  data-action="add-project">
+
+                  <span>📁</span>
+
+                  <strong>
+                    إضافة مشروع
+                  </strong>
+
+                  <small>
+                    مشروع جديد للمنصة
+                  </small>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="quick-action"
+                  data-action="add-support">
+
+                  <span>❤️</span>
+
+                  <strong>
+                    إضافة رابط دعم
+                  </strong>
+
+                  <small>
+                    رابط أو وسيلة دعم
+                  </small>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  class="quick-action"
+                  data-action="add-announcement">
+
+                  <span>📢</span>
+
+                  <strong>
+                    إضافة إعلان
+                  </strong>
+
+                  <small>
+                    عرض أو إعلان جديد
+                  </small>
+
+                </button>
+
+
+              </div>
+
+            </div>
+
+
+            <!-- النشاط الأخير -->
+
+            <div class="two-columns">
+
+
+              <div class="panel">
+
+                <div class="panel-header">
+
+                  <div>
+
+                    <
